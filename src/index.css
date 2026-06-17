@@ -19,6 +19,15 @@
 /* Custom premium scrollbar and global resets */
 html {
   scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+html.dark {
   background-color: #030408;
   color: #f1f5f9;
 }

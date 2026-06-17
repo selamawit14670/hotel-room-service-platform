@@ -35,6 +35,11 @@ export default function App() {
     staff,
     settings,
     theme,
+    connectionStatus,
+    offlineQueue,
+    systemAlert,
+    setConnectionStatus,
+    broadcastWSMessage,
     loginGuest,
     loginStaff,
     logout,
@@ -101,33 +106,113 @@ export default function App() {
       {viewMode === 'app' && (
         <div className="relative min-h-screen">
           
-          {/* Quick Hub Navigation Bar for reviewer to switch to Marketing landing page */}
-          <div className="bg-slate-900 border-b border-white/5 py-2 px-4 shadow-sm select-none z-50">
-            <div className="max-w-7xl mx-auto flex items-center justify-between font-mono text-[10px] text-slate-400">
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span className="font-bold text-slate-200">RoomServiceOS Terminal</span>
-                <span className="hidden sm:inline">&bull; Real-Time Multi-Tab Local Synchronization Active</span>
+          {/* Quick Hub & Custom Real-Time WebSocket Connection Control Bar */}
+          <div className="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-white/5 py-2.5 px-4 shadow-sm select-none z-50 transition-colors duration-300 text-slate-900 dark:text-slate-100">
+            <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-3 items-center justify-between font-mono text-[11px]">
+              
+              <div className="flex flex-wrap items-center gap-2.5 text-slate-700 dark:text-slate-300 justify-center">
+                <span className="font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full flex items-center justify-center relative">
+                    <span className={`w-2.5 h-2.5 rounded-full absolute ${
+                      connectionStatus === 'connected' ? 'bg-emerald-500' :
+                      connectionStatus === 'reconnecting' ? 'bg-amber-500 animate-ping' : 'bg-rose-500'
+                    }`}></span>
+                    <span className={`w-1.5 h-1.5 rounded-full ${
+                      connectionStatus === 'connected' ? 'bg-emerald-650' :
+                      connectionStatus === 'reconnecting' ? 'bg-amber-600' : 'bg-rose-600'
+                    }`}></span>
+                  </span>
+                  RoomServiceOS Terminal
+                </span>
+                <span className="text-slate-300 dark:text-slate-700">|</span>
+                
+                {/* Connection Simulator Buttons */}
+                <div className="inline-flex gap-1 items-center bg-slate-200/50 dark:bg-black/40 p-0.5 rounded-lg border border-slate-300/30 dark:border-slate-800">
+                  <span className="px-1.5 text-[9px] uppercase font-bold text-slate-500 dark:text-slate-400">WS Connection:</span>
+                  <button
+                    onClick={() => setConnectionStatus('connected')}
+                    className={`px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer transition-all ${
+                      connectionStatus === 'connected'
+                        ? 'bg-emerald-500 text-white'
+                        : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-250'
+                    }`}
+                  >
+                    Online
+                  </button>
+                  <button
+                    onClick={() => setConnectionStatus('reconnecting')}
+                    className={`px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer transition-all ${
+                      connectionStatus === 'reconnecting'
+                        ? 'bg-amber-500 text-black'
+                        : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-250'
+                    }`}
+                  >
+                    Reconnecting
+                  </button>
+                  <button
+                    onClick={() => setConnectionStatus('offline')}
+                    className={`px-2 py-0.5 rounded text-[10px] font-bold cursor-pointer transition-all ${
+                      connectionStatus === 'offline'
+                        ? 'bg-rose-500 text-white'
+                        : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-250'
+                    }`}
+                  >
+                    Offline
+                  </button>
+                </div>
+
+                {offlineQueue.length > 0 && (
+                  <span className="px-2 py-0.5 rounded-full bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 text-[10px] font-bold border border-amber-500/20 animate-pulse">
+                     📡 {offlineQueue.length} Pending Actions Queued
+                  </span>
+                )}
               </div>
               
-              <button
-                onClick={() => {
-                  setViewMode('marketing');
-                  showSyncNotification("Switched to B2B Marketing Product Presentation Site.");
-                }}
-                className="px-3 py-1 rounded bg-amber-500 hover:brightness-105 active:scale-[0.98] text-black font-bold uppercase transition-transform flex items-center gap-1.5 cursor-pointer"
-              >
-                <MonitorPlay className="w-3.5 h-3.5" />
-                <span>Show B2B Marketing Pitch Site</span>
-              </button>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => {
+                    setViewMode('marketing');
+                    broadcastWSMessage("Switched viewport to presentation landing deck.");
+                  }}
+                  className="px-3 py-1 rounded-lg bg-amber-500 hover:brightness-105 active:scale-[0.98] text-black font-extrabold uppercase transition-all flex items-center gap-1.5 cursor-pointer shadow-sm text-[10px]"
+                >
+                  <MonitorPlay className="w-3.5 h-3.5" />
+                  <span>Show B2B Marketing Pitch Site</span>
+                </button>
+              </div>
+
             </div>
           </div>
+
+          {/* Real-time WebSockets Sync alerts floating Toast */}
+          {(systemAlert || syncAlert) && (
+            <div className="fixed top-14 right-4 z-50 max-w-sm w-full bg-slate-900 border border-amber-500/35 text-white rounded-2xl shadow-2xl p-4 animate-slide-in font-sans">
+              <div className="flex items-start gap-3">
+                <div className="p-2 rounded-xl bg-amber-500/15 text-amber-500 border border-amber-500/20">
+                  <Sparkles className="w-4 h-4 animate-pulse text-amber-500" />
+                </div>
+                <div className="flex-1 space-y-0.5">
+                  <p className="text-[10px] font-mono tracking-widest text-amber-400 font-extrabold uppercase">
+                    Live System Synchroniser 📡
+                  </p>
+                  <p className="text-xs text-slate-100 font-semibold leading-relaxed">
+                    {systemAlert || syncAlert}
+                  </p>
+                  <p className="text-[9px] font-mono text-slate-500">
+                    Propagated via websocket broadcast channel.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Render corresponding portal depending on checked guest user session */}
           {session.role === 'none' && (
             <LoginScreen 
               onLoginGuest={handleLoginGuestWithNotification} 
               onLoginStaff={handleLoginStaffWithNotification} 
+              theme={theme}
+              onToggleTheme={toggleTheme}
             />
           )}
 

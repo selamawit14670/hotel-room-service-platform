@@ -20,7 +20,7 @@ export interface UserSession {
   waiterId?: string;
 }
 
-// Initial Menu Data mapped to requested categories: Breakfast, Main Courses, Beverages, Snacks, Amenities
+// Initial Menu Data
 const INITIAL_MENU_ITEMS: MenuItem[] = [
   // Breakfast
   {
@@ -155,7 +155,6 @@ const DEFAULT_HOTEL_SETTINGS: HotelSettings = {
   totalRooms: 350
 };
 
-// Generates initial mock orders to make the portal dashboards populated immediately
 const getInitialOrders = (): Order[] => {
   const now = new Date();
   return [
@@ -197,7 +196,7 @@ const getInitialOrders = (): Order[] => {
       ],
       specialRequests: "Leave on door-peg if not responding.",
       status: "ready",
-      timestamp: new Date(now.getTime() - 28 * 60 * 1000), // 28 mins ago (This will trigger alert in kitchen (>25m status change delay) and supervisor (>30m warning total delay)!)
+      timestamp: new Date(now.getTime() - 28 * 60 * 1000), // 28 mins ago 
       prepStartedAt: new Date(now.getTime() - 27 * 60 * 1000),
       readyAt: new Date(now.getTime() - 20 * 60 * 1000),
       chefName: "Chef Hélène Darroze",
@@ -236,16 +235,13 @@ const getInitialOrders = (): Order[] => {
   ];
 };
 
-// Main state reader/writer class that maintains consistency in localStorage
 export function useSharedSystem() {
   const [session, setSession] = useState<UserSession>(() => {
     const saved = localStorage.getItem('rsos_session');
     if (saved) {
       try {
         return JSON.parse(saved);
-      } catch (e) {
-        // Fallback
-      }
+      } catch (e) {}
     }
     return { role: 'none' };
   });
@@ -255,7 +251,6 @@ export function useSharedSystem() {
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        // Map dates
         return parsed.map((o: any) => ({
           ...o,
           timestamp: new Date(o.timestamp),
@@ -308,10 +303,30 @@ export function useSharedSystem() {
     if (saved === 'light' || saved === 'dark') {
       return saved;
     }
-    return 'dark'; // Default premium look is dark
+    return 'dark'; // Dark premium look
   });
 
-  // Listener to synchronized browser storage changes in real time across tabs!
+  // Simulated WebSockets Connection Status: 'connected' | 'reconnecting' | 'offline'
+  const [connectionStatus, setConnectionStatusState] = useState<'connected' | 'reconnecting' | 'offline'>(() => {
+    const saved = localStorage.getItem('rsos_connection');
+    return (saved as any) || 'connected';
+  });
+
+  // Offline Pending Operations queue
+  const [offlineQueue, setOfflineQueue] = useState<any[]>(() => {
+    const saved = localStorage.getItem('rsos_offline_queue');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {}
+    }
+    return [];
+  });
+
+  // Centralized alert message broadcasted via localStorage across tabs
+  const [systemAlert, setSystemAlert] = useState<string | null>(null);
+
+  // Storage listener across tabs for real-time synchronization
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'rsos_orders') {
@@ -333,6 +348,20 @@ export function useSharedSystem() {
         setSession(JSON.parse(e.newValue || '{"role":"none"}'));
       } else if (e.key === 'rsos_theme') {
         setTheme((e.newValue as 'light' | 'dark') || 'dark');
+      } else if (e.key === 'rsos_connection') {
+        setConnectionStatusState((e.newValue as any) || 'connected');
+      } else if (e.key === 'rsos_offline_queue') {
+        setOfflineQueue(JSON.parse(e.newValue || '[]'));
+      } else if (e.key === 'rsos_system_alert') {
+        if (e.newValue) {
+          try {
+            const parsed = JSON.parse(e.newValue);
+            setSystemAlert(parsed.message);
+            setTimeout(() => {
+              setSystemAlert(null);
+            }, 6000);
+          } catch (err) {}
+        }
       }
     };
 
@@ -342,14 +371,59 @@ export function useSharedSystem() {
     };
   }, []);
 
-  // Update localStorage helper
+  // Update Storage Helper
   const saveStateToStorage = (key: string, value: any) => {
     localStorage.setItem(key, JSON.stringify(value));
-    // Trigger storage event manually for same-page listeners or multiple frames on the same origin
     window.dispatchEvent(new StorageEvent('storage', { key, newValue: JSON.stringify(value) }));
   };
 
-  // Helper function to tick active orders elapsed timers
+  // Broadcast WebSockets system events across all devices & staff portals instantly
+  const broadcastWSMessage = (msg: string) => {
+    const payload = { message: msg, timestamp: Date.now() };
+    localStorage.setItem('rsos_system_alert', JSON.stringify(payload));
+    window.dispatchEvent(new StorageEvent('storage', { key: 'rsos_system_alert', newValue: JSON.stringify(payload) }));
+    setSystemAlert(msg);
+    setTimeout(() => {
+      setSystemAlert(null);
+    }, 6000);
+  };
+
+  // Change simulated connection modes ('connected' | 'reconnecting' | 'offline')
+  const setConnectionStatus = (status: 'connected' | 'reconnecting' | 'offline') => {
+    saveStateToStorage('rsos_connection', status);
+    setConnectionStatusState(status);
+
+    if (status === 'connected') {
+      // Automatically flush and replay queued actions
+      const savedQueue = localStorage.getItem('rsos_offline_queue');
+      if (savedQueue) {
+        try {
+          const queue = JSON.parse(savedQueue);
+          if (queue.length > 0) {
+            saveStateToStorage('rsos_offline_queue', []);
+            setOfflineQueue([]);
+            broadcastWSMessage(`📡 Network Connected: Synchronized ${queue.length} offline actions to the Property Management System!`);
+          } else {
+            broadcastWSMessage(`🔌 WebSocket connection established on port 3000.`);
+          }
+        } catch (e) {}
+      }
+    } else if (status === 'reconnecting') {
+      broadcastWSMessage(`⏳ Reconnecting: Accessing PMS telemetry database...`);
+    } else {
+      broadcastWSMessage(`🔌 Connection interrupted: Now working in offline-resilient cache mode.`);
+    }
+  };
+
+  // Push item to the offline queuing registry
+  const queueOfflineAction = (actionDesc: string) => {
+    const nextQueue = [...offlineQueue, { desc: actionDesc, id: `act-${Date.now()}`, time: new Date().toLocaleTimeString() }];
+    saveStateToStorage('rsos_offline_queue', nextQueue);
+    setOfflineQueue(nextQueue);
+    broadcastWSMessage(`⏳ [OFFLINE QUEUED] action saved on disk: "${actionDesc}"`);
+  };
+
+  // Tick active order timers
   useEffect(() => {
     const interval = setInterval(() => {
       setOrders(currentOrders => {
@@ -363,8 +437,6 @@ export function useSharedSystem() {
           }
           return o;
         });
-
-        // Save to storage but throttle or just set directly
         localStorage.setItem('rsos_orders', JSON.stringify(updated));
         return updated;
       });
@@ -373,7 +445,7 @@ export function useSharedSystem() {
     return () => clearInterval(interval);
   }, []);
 
-  // Apply visual theme overlay
+  // Apply visual theme to CSS DOM hierarchy
   useEffect(() => {
     const root = window.document.documentElement;
     if (theme === 'dark') {
@@ -395,6 +467,7 @@ export function useSharedSystem() {
     };
     saveStateToStorage('rsos_session', newSession);
     setSession(newSession);
+    broadcastWSMessage(`🔑 Suite ${roomNumber} Active: ${guestName} registered and entered dining salon.`);
   };
 
   const loginStaff = (role: 'kitchen' | 'waiter' | 'supervisor' | 'admin', username: string, waiterId?: string) => {
@@ -405,23 +478,25 @@ export function useSharedSystem() {
     };
     saveStateToStorage('rsos_session', newSession);
     setSession(newSession);
+    broadcastWSMessage(`💼 Portal Auth: ${username} connected to the ${role.toUpperCase()} dispatch terminal.`);
   };
 
   const logout = () => {
+    const oldRole = session.role;
+    const oldName = session.guestName || session.username || "Staff";
     const newSession: UserSession = { role: 'none' };
     saveStateToStorage('rsos_session', newSession);
     setSession(newSession);
+    broadcastWSMessage(`🔒 Session Closed: ${oldName} disconnected from ${oldRole.toUpperCase()} terminal.`);
   };
 
-  // Theme Manager
   const toggleTheme = () => {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('rsos_theme', nextTheme);
-    window.dispatchEvent(new StorageEvent('storage', { key: 'rsos_theme', newValue: nextTheme }));
+    saveStateToStorage('rsos_theme', nextTheme);
     setTheme(nextTheme);
   };
 
-  // Order Operations
+  // Order Operations with live events
   const placeOrder = (items: OrderItem[], specialRequests?: string) => {
     if (session.role !== 'guest' || !session.roomNumber || !session.guestName) return null;
 
@@ -439,10 +514,19 @@ export function useSharedSystem() {
     const nextOrders = [newOrder, ...orders];
     saveStateToStorage('rsos_orders', nextOrders);
     setOrders(nextOrders);
+
+    if (connectionStatus === 'offline') {
+      queueOfflineAction(`Place Order ${newOrder.id} for Room ${newOrder.roomNumber}`);
+    } else {
+      broadcastWSMessage(`🔔 WS_EVENT: ORDER_CREATED » Suite ${newOrder.roomNumber} placed order ${newOrder.id} (${items.length} items)!`);
+    }
     return newOrder;
   };
 
   const updateOrderStatus = (orderId: string, status: OrderStatus, extra: Partial<Order> = {}) => {
+    const prevOrder = orders.find(o => o.id === orderId);
+    const room = prevOrder ? prevOrder.roomNumber : '?';
+
     const nextOrders = orders.map(o => {
       if (o.id === orderId) {
         const patch: Partial<Order> = { ...extra, status };
@@ -457,8 +541,30 @@ export function useSharedSystem() {
       }
       return o;
     });
+
     saveStateToStorage('rsos_orders', nextOrders);
     setOrders(nextOrders);
+
+    if (connectionStatus === 'offline') {
+      queueOfflineAction(`Update Order ${orderId} status to ${status.toUpperCase()}`);
+    } else {
+      const statusMap: Record<string, string> = {
+        pending: 'ORDER_CREATED',
+        preparing: 'ORDER_PREPARING',
+        ready: 'ORDER_READY',
+        delivering: 'ORDER_DELIVERING',
+        completed: 'ORDER_DELIVERED',
+        cancelled: 'ORDER_CANCELLED'
+      };
+      const eventCode = statusMap[status] || 'ORDER_UPDATED';
+      const actorAndContext = 
+        status === 'preparing' ? `Chef started cooking` :
+        status === 'ready' ? `Kitchen finished plating` :
+        status === 'delivering' ? `${extra.waiterName || 'Courier'} claimed & dispatched` :
+        status === 'completed' ? `Courier delivered to Door` : `Status updated to ${status}`;
+      
+      broadcastWSMessage(`🍽️ WS_EVENT: ${eventCode} » Order ${orderId} (Suite ${room}) &bull; ${actorAndContext}!`);
+    }
   };
 
   // Menu Management Table API
@@ -472,16 +578,33 @@ export function useSharedSystem() {
     }
     saveStateToStorage('rsos_menu_items', nextItems);
     setMenuItems(nextItems);
+
+    if (connectionStatus === 'offline') {
+      queueOfflineAction(`Save Menu Item ${item.name}`);
+    } else {
+      broadcastWSMessage(`📝 WS_EVENT: MENU_UPDATED » Culinary item "${item.name}" was saved.`);
+    }
   };
 
   const deleteMenuItem = (itemId: string) => {
+    const deletedItem = menuItems.find(m => m.id === itemId);
+    const name = deletedItem ? deletedItem.name : itemId;
     const nextItems = menuItems.filter(m => m.id !== itemId);
     saveStateToStorage('rsos_menu_items', nextItems);
     setMenuItems(nextItems);
+
+    if (connectionStatus === 'offline') {
+      queueOfflineAction(`Delete Menu Item ${name}`);
+    } else {
+      broadcastWSMessage(`🔥 WS_EVENT: MENU_UPDATED » Culinary item "${name}" was deleted.`);
+    }
   };
 
   // Staff Management Table API
   const updateStaffStatus = (staffId: string, status: 'active' | 'busy' | 'offline') => {
+    const member = staff.find(s => s.id === staffId);
+    const name = member ? member.name : staffId;
+
     const nextStaff = staff.map(s => {
       if (s.id === staffId) {
         return { ...s, status };
@@ -490,6 +613,12 @@ export function useSharedSystem() {
     });
     saveStateToStorage('rsos_staff', nextStaff);
     setStaff(nextStaff);
+
+    if (connectionStatus === 'offline') {
+      queueOfflineAction(`Update Staff ${name} to ${status}`);
+    } else {
+      broadcastWSMessage(`🕴️ WS_EVENT: STAFF_STATUS_CHANGED » ${name} is now ${status.toUpperCase()}.`);
+    }
   };
 
   const updateStaffMember = (member: StaffMember) => {
@@ -502,12 +631,23 @@ export function useSharedSystem() {
     }
     saveStateToStorage('rsos_staff', nextStaff);
     setStaff(nextStaff);
+
+    if (connectionStatus === 'offline') {
+      queueOfflineAction(`Save Staff Roster Member ${member.name}`);
+    } else {
+      broadcastWSMessage(`🕴️ WS_EVENT: STAFF_STATUS_CHANGED » Team member "${member.name}" was modified.`);
+    }
   };
 
-  // Settings manager
   const updateHotelSettings = (newSettings: HotelSettings) => {
     saveStateToStorage('rsos_hotel_settings', newSettings);
     setSettings(newSettings);
+
+    if (connectionStatus === 'offline') {
+      queueOfflineAction(`Update Properties settings for ${newSettings.name}`);
+    } else {
+      broadcastWSMessage(`🏨 WS_EVENT: HOTEL_SETTINGS_CHANGED » Global hospitality metadata synced.`);
+    }
   };
 
   return {
@@ -517,6 +657,11 @@ export function useSharedSystem() {
     staff,
     settings,
     theme,
+    connectionStatus,
+    offlineQueue,
+    systemAlert,
+    setConnectionStatus,
+    broadcastWSMessage,
     loginGuest,
     loginStaff,
     logout,

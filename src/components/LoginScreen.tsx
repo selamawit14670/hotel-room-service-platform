@@ -1,26 +1,35 @@
 import React, { useState } from 'react';
-import { KeyRound, Landmark, UserCheck, Shield, HelpCircle, ArrowRight, Sparkles, Smile, Tv } from 'lucide-react';
-import { PortalType } from '../lib/state';
+import { 
+  KeyRound, Landmark, Shield, HelpCircle, ArrowRight, Sparkles, Smile, 
+  Moon, Sun, ChevronLeft, CookingPot, Smartphone, ShieldCheck, Users, Settings 
+} from 'lucide-react';
 
 interface LoginScreenProps {
   onLoginGuest: (roomNumber: string, guestName: string, phoneNumber: string) => void;
   onLoginStaff: (role: 'kitchen' | 'waiter' | 'supervisor' | 'admin', username: string, waiterId?: string) => void;
+  theme?: 'light' | 'dark';
+  onToggleTheme?: () => void;
 }
 
-export default function LoginScreen({ onLoginGuest, onLoginStaff }: LoginScreenProps) {
+export default function LoginScreen({ onLoginGuest, onLoginStaff, theme = 'dark', onToggleTheme }: LoginScreenProps) {
   const [activeTab, setActiveTab] = useState<'guest' | 'staff'>('guest');
 
-  // Guest inputs
+  // Selected station inside the Staff Station tab
+  const [selectedStation, setSelectedStation] = useState<'none' | 'kitchen' | 'waiter' | 'supervisor' | 'admin'>('none');
+
+  // Guest inputs (Empty by default)
   const [roomNum, setRoomNum] = useState('');
   const [guestName, setGuestName] = useState('');
   const [phone, setPhone] = useState('');
   const [guestError, setGuestError] = useState('');
 
-  // Staff inputs
-  const [staffRole, setStaffRole] = useState<'kitchen' | 'waiter' | 'supervisor' | 'admin'>('kitchen');
+  // Staff inputs (Empty by default)
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [staffError, setStaffError] = useState('');
+  
+  // Custom dialog notifications
+  const [forgotAlert, setForgotAlert] = useState<string | null>(null);
 
   const handleGuestSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,84 +51,117 @@ export default function LoginScreen({ onLoginGuest, onLoginStaff }: LoginScreenP
 
   const handleStaffSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Validate credentials
-    const validRoles = {
-      kitchen: { user: 'kitchen', pass: 'kitchen' },
-      waiter: { user: 'waiter', pass: 'waiter' },
-      supervisor: { user: 'supervisor', pass: 'supervisor' },
-      admin: { user: 'admin', pass: 'admin' }
-    };
+    setStaffError('');
 
-    const targetUser = username.trim() || staffRole;
-    const targetPass = password.trim() || staffRole;
+    if (selectedStation === 'none') return;
 
-    if (targetUser.toLowerCase() === staffRole && targetPass === staffRole) {
-      setStaffError('');
-      // Assign specific waiter ID for testing Sofia (st-3) or Marcus (st-4) if waiter
-      const waiterId = staffRole === 'waiter' ? 'st-3' : undefined;
-      onLoginStaff(staffRole, `staff_${staffRole}`, waiterId);
-    } else {
-      setStaffError(`Invalid login. Use "${staffRole}" as username and password for testing.`);
+    // Secure mock validation
+    // Requires both fields to have content of at least 3 characters
+    if (!username.trim()) {
+      setStaffError('Please enter your terminal ID.');
+      return;
     }
+    if (!password) {
+      setStaffError('Please enter your access key.');
+      return;
+    }
+
+    if (username.trim().length < 3) {
+      setStaffError('Terminal User ID must be at least 3 characters.');
+      return;
+    }
+    if (password.length < 3) {
+      setStaffError('Access Key Passcode must be at least 3 characters.');
+      return;
+    }
+
+    // Assign specific waiter ID for testing Sofia (st-3) or Marcus (st-4) if waiter
+    const waiterId = selectedStation === 'waiter' ? 'st-3' : undefined;
+    onLoginStaff(selectedStation, username.trim(), waiterId);
   };
 
-  const prefillGuest = (num: string, name: string, ph: string) => {
-    setRoomNum(num);
-    setGuestName(name);
-    setPhone(ph);
-    setGuestError('');
+  const handleForgotCredentials = () => {
+    setForgotAlert(
+      `Credential recovery dispatched. An encrypted verification ticket has been sent to the IT Front-Desk on PMS Channel 4.`
+    );
+    setTimeout(() => {
+      setForgotAlert(null);
+    }, 6000);
   };
 
-  const quickLoginStaff = (role: 'kitchen' | 'waiter' | 'supervisor' | 'admin') => {
-    setStaffRole(role);
-    setUsername(role);
-    setPassword(role);
+  const resetStaffPanel = () => {
+    setSelectedStation('none');
+    setUsername('');
+    setPassword('');
     setStaffError('');
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-[#030408] text-slate-900 dark:text-slate-100 transition-colors duration-300 relative select-none">
-      {/* Background Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-amber-500/5 dark:bg-[#c5a880]/5 blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-indigo-500/5 blur-3xl pointer-events-none"></div>
+    <div className="min-h-screen flex flex-col justify-between py-6 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-[#030408] text-slate-900 dark:text-slate-100 transition-colors duration-300 relative select-none">
+      
+      {/* Decorative Blur Orbs */}
+      <div className="absolute top-1/4 left-1/4 w-80 h-80 rounded-full bg-amber-500/5 dark:bg-[#c5a880]/5 blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-blue-500/5 blur-3xl pointer-events-none"></div>
 
-      <div className="max-w-md w-full space-y-8 z-10">
+      {/* Header with quick branding and theme toggle */}
+      <header className="max-w-6xl w-full mx-auto flex items-center justify-between z-10 py-2 border-b border-slate-200/50 dark:border-slate-900">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-lg bg-amber-500/10 dark:bg-[#c5a880]/10 border border-amber-500/20 dark:border-[#c5a880]/20 flex items-center justify-center">
+            <Landmark className="w-4 h-4 text-amber-600 dark:text-[#c5a880]" />
+          </div>
+          <span className="font-display font-black text-xs uppercase tracking-widest text-slate-800 dark:text-slate-100">
+            RoomServiceOS
+          </span>
+        </div>
+
+        {onToggleTheme && (
+          <button
+            onClick={onToggleTheme}
+            className="p-2.2 rounded-xl bg-white dark:bg-neutral-900 hover:text-amber-500 hover:dark:bg-black/50 border border-slate-200 dark:border-slate-800 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm text-xs font-mono font-bold"
+            title="Toggle Light/Dark Theme"
+          >
+            {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-500" />}
+            <span className="hidden sm:inline">{theme === 'dark' ? "Light Mode" : "Dark Mode"}</span>
+          </button>
+        )}
+      </header>
+
+      {/* Centered Auth Card Container */}
+      <div className="max-w-md w-full mx-auto space-y-6 z-10 my-8">
         
-        {/* Brand Header */}
-        <div className="text-center space-y-3">
-          <div className="inline-flex items-center justify-center p-3 rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-600/20 border border-amber-500/20 animate-pulse-slow">
-            <Landmark className="w-8 h-8 text-amber-600 dark:text-[#c5a880]" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-black tracking-widest font-display text-slate-900 dark:text-slate-50 uppercase leading-none">
-              RoomServiceOS
-            </h1>
-            <p className="text-[10px] uppercase font-mono tracking-widest text-amber-600 dark:text-[#c5a880] mt-1.5 font-bold">
-              Luxury Hospitality Platform
-            </p>
-          </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs mx-auto text-center leading-relaxed font-sans mt-2">
-            Experience the real-time operational engine trusted by five-star resorts to synchronize orders, kitchens, and couriers.
+        {/* Brand Header Text */}
+        <div className="text-center space-y-2">
+          <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[9px] font-mono uppercase text-[#c5a880] bg-[#c5a880]/10 border border-[#c5a880]/20 font-bold">
+            <Sparkles className="w-3 h-3 animate-pulse" /> Unified Operations Login
+          </span>
+          <h1 className="text-xl font-bold font-display tracking-tight text-slate-900 dark:text-slate-50">
+            Select Your Workspace Station
+          </h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs mx-auto leading-relaxed">
+            Register as a penthouse roomguest or authenticate securely into professional staff delivery terminals.
           </p>
         </div>
 
-        {/* Tab Selection */}
-        <div className="grid grid-cols-2 p-1.5 rounded-2xl bg-slate-200/60 dark:bg-neutral-900/80 border border-slate-300/40 dark:border-slate-800/40 shadow-inner">
+        {/* Global Level 1 Tab Selector: Guest vs Staff */}
+        <div className="grid grid-cols-2 p-1 rounded-2xl bg-slate-200/60 dark:bg-neutral-900/80 border border-slate-300/40 dark:border-slate-800/40 shadow-inner">
           <button
-            onClick={() => setActiveTab('guest')}
+            onClick={() => {
+              setActiveTab('guest');
+              resetStaffPanel();
+            }}
             className={`py-3 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer ${
               activeTab === 'guest'
                 ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 shadow-md font-bold'
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
           >
-            <Smile className="w-4 h-4" /> Guest QR Scan
+            <Smile className="w-4 h-4" /> Guest Portal Entrance
           </button>
           
           <button
             onClick={() => {
               setActiveTab('staff');
-              quickLoginStaff('kitchen');
+              resetStaffPanel();
             }}
             className={`py-3 text-xs font-semibold rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer ${
               activeTab === 'staff'
@@ -127,22 +169,22 @@ export default function LoginScreen({ onLoginGuest, onLoginStaff }: LoginScreenP
                 : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
           >
-            <Shield className="w-4 h-4" /> Staff Station
+            <Shield className="w-4 h-4" /> Professional Station
           </button>
         </div>
 
-        {/* Guest Tab Room Onboarding */}
-        {activeTab === 'guest' ? (
+        {/* Guest Registration Segment */}
+        {activeTab === 'guest' && (
           <div className="bg-white dark:bg-neutral-950/80 border border-slate-200 dark:border-slate-900 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
             <div className="border-b border-slate-100 dark:border-slate-900 pb-4">
               <span className="text-[10px] font-mono tracking-widest text-[#c5a880] font-bold uppercase block">
-                IN-ROOM DIRECT CONSOLE
+                IN-ROOM DINING DIRECT PORTAL
               </span>
-              <h2 className="text-lg font-bold font-display text-slate-800 dark:text-slate-200 mt-1">
-                Guest Room Registration
+              <h2 className="text-lg font-bold font-display text-slate-800 dark:text-slate-200 mt-0.5">
+                Register Room Suite
               </h2>
               <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">
-                Register with your active penthouse or suite room key to browse room service dining.
+                All fields are fully editable. Please enter your room details to browse.
               </p>
             </div>
 
@@ -156,7 +198,7 @@ export default function LoginScreen({ onLoginGuest, onLoginStaff }: LoginScreenP
                   placeholder="e.g. 304"
                   value={roomNum}
                   onChange={(e) => setRoomNum(e.target.value)}
-                  className="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 dark:border-slate-900 bg-slate-50 dark:bg-black/40 focus:outline-none focus:ring-1 focus:ring-amber-500 dark:text-white"
+                  className="w-full px-4 py-3 text-sm rounded-xl border border-slate-205 dark:border-slate-900 bg-slate-50 dark:bg-black/40 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500 dark:text-white"
                   maxLength={6}
                 />
               </div>
@@ -170,7 +212,7 @@ export default function LoginScreen({ onLoginGuest, onLoginStaff }: LoginScreenP
                   placeholder="e.g. Lord Julian Sterling"
                   value={guestName}
                   onChange={(e) => setGuestName(e.target.value)}
-                  className="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 dark:border-slate-900 bg-slate-50 dark:bg-black/40 focus:outline-none focus:ring-1 focus:ring-amber-500 dark:text-white"
+                  className="w-full px-4 py-3 text-sm rounded-xl border border-slate-205 dark:border-slate-900 bg-slate-50 dark:bg-black/40 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500 dark:text-white"
                 />
               </div>
 
@@ -183,7 +225,7 @@ export default function LoginScreen({ onLoginGuest, onLoginStaff }: LoginScreenP
                   placeholder="e.g. +33 6 40 12"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 dark:border-slate-900 bg-slate-50 dark:bg-black/40 focus:outline-none focus:ring-1 focus:ring-amber-500 dark:text-white"
+                  className="w-full px-4 py-3 text-sm rounded-xl border border-slate-205 dark:border-slate-900 bg-slate-50 dark:bg-black/40 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500 dark:text-white"
                 />
               </div>
 
@@ -197,122 +239,183 @@ export default function LoginScreen({ onLoginGuest, onLoginStaff }: LoginScreenP
                 type="submit"
                 className="w-full py-3.5 px-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:brightness-105 active:scale-[0.99] font-bold text-xs text-white dark:text-black uppercase tracking-wider rounded-xl transition-all shadow-lg shadow-amber-500/10 cursor-pointer flex items-center justify-center gap-2"
               >
-                <span>Browse Dining Menu</span>
+                <span>Browse Culinary Menu</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </form>
-
-            {/* Simulated Live Scan Assist */}
-            <div className="pt-4 border-t border-slate-100 dark:border-slate-900">
-              <span className="text-[10px] font-mono font-bold text-slate-400 block mb-2.5 uppercase">
-                ⚙️ Quick Simulator Pre-fills (One-Tap Test)
-              </span>
-              <div className="grid grid-cols-2 gap-2.5">
-                <button
-                  onClick={() => prefillGuest("304", "Lord Julian Sterling", "+33 6 40 12")}
-                  className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-900 bg-slate-50 dark:bg-black/20 hover:border-amber-500 text-left transition-all cursor-pointer"
-                >
-                  <p className="text-[9px] font-mono text-slate-400">PENTHOUSE</p>
-                  <p className="text-xs font-bold text-slate-700 dark:text-slate-200 truncate">Room 304</p>
-                  <p className="text-[9px] text-[#c5a880] truncate font-sans">Julian Sterling</p>
-                </button>
-                <button
-                  onClick={() => prefillGuest("512", "Lady Elizabeth Windsor", "+44 79 11 02")}
-                  className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-900 bg-slate-50 dark:bg-black/20 hover:border-amber-500 text-left transition-all cursor-pointer"
-                >
-                  <p className="text-[9px] font-mono text-slate-400">PRESIDENTIAL</p>
-                  <p className="text-xs font-bold text-slate-700 dark:text-slate-200 truncate">Room 512</p>
-                  <p className="text-[9px] text-[#c5a880] truncate font-sans">Lady Elizabeth</p>
-                </button>
-              </div>
-            </div>
-          </div>
-        ) : (
-          /* Staff Operations Station Tab */
-          <div className="bg-white dark:bg-neutral-950/80 border border-slate-200 dark:border-slate-900 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
-            <div className="border-b border-slate-100 dark:border-slate-900 pb-4">
-              <span className="text-[10px] font-mono tracking-widest text-[#c5a880] font-bold uppercase block">
-                SECURE CREDENTIALS PANEL
-              </span>
-              <h2 className="text-lg font-bold font-display text-slate-800 dark:text-slate-200 mt-1">
-                Staff Terminals Login
-              </h2>
-              <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">
-                Staff members authentication terminal. Select role and enter details.
-              </p>
-            </div>
-
-            {/* Fast Role Clicker tabs */}
-            <div className="grid grid-cols-4 gap-1.5">
-              {(['kitchen', 'waiter', 'supervisor', 'admin'] as const).map((r) => (
-                <button
-                  key={r}
-                  type="button"
-                  onClick={() => quickLoginStaff(r)}
-                  className={`py-2 rounded-lg text-[10px] uppercase font-mono tracking-wide transition-all cursor-pointer ${
-                    staffRole === r
-                      ? 'bg-amber-500 text-white dark:text-black font-bold'
-                      : 'bg-slate-100 dark:bg-black/40 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 border border-slate-200 dark:border-slate-900'
-                  }`}
-                >
-                  {r}
-                </button>
-              ))}
-            </div>
-
-            <form onSubmit={handleStaffSubmit} className="space-y-4">
-              <div>
-                <label className="block text-[11px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5 font-bold">
-                  Terminal User ID
-                </label>
-                <input
-                  type="text"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 dark:border-slate-900 bg-slate-50 dark:bg-black/40 focus:outline-none focus:ring-1 focus:ring-amber-500 dark:text-white font-mono"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5 font-bold">
-                  Access Key Passcode
-                </label>
-                <input
-                  type="password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 dark:border-slate-900 bg-slate-50 dark:bg-black/40 focus:outline-none focus:ring-1 focus:ring-amber-500 dark:text-white font-mono"
-                />
-              </div>
-
-              {staffError && (
-                <p className="text-xs text-rose-500 text-center font-medium">
-                  ⚠️ {staffError}
-                </p>
-              )}
-
-              <button
-                type="submit"
-                className="w-full py-3.5 px-4 bg-slate-900 dark:bg-white text-white dark:text-black hover:brightness-110 active:scale-[0.99] font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
-              >
-                <KeyRound className="w-4 h-4 text-amber-500" />
-                <span>Enter Terminal Console</span>
-              </button>
-            </form>
-
-            <div className="p-3 rounded-2xl bg-amber-500/5 border border-amber-500/10 text-[10px] font-mono leading-relaxed text-slate-500 dark:text-slate-400 text-center">
-              💡 **Staff Test Pro-Tip**: Try selecting role button, which pre-fills credentials (e.g. `kitchen`/`kitchen`), then click **"Enter Terminal Console"**.
-            </div>
           </div>
         )}
 
-        <div className="text-center font-mono text-[9px] text-slate-400">
-          🏨 System Sync Module Active - Multi-portal synchronized simulation
-        </div>
+        {/* Staff Operations Tab Option selection */}
+        {activeTab === 'staff' && (
+          <div className="space-y-4">
+            {selectedStation === 'none' ? (
+              // STEP 1: Choose which specific Staff Portal to login to
+              <div className="bg-white dark:bg-neutral-950/80 border border-slate-200 dark:border-slate-900 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+                <div>
+                  <span className="text-[10px] font-mono tracking-widest text-[#c5a880] font-bold uppercase block">
+                    ACTIVE HOSPITALITY CONCENTRIC
+                  </span>
+                  <h2 className="text-lg font-bold font-display text-slate-800 dark:text-slate-200 mt-0.5">
+                    Terminal Console Selection
+                  </h2>
+                  <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">
+                    Choose your designated operations station below to verify credentials.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2">
+                  <button
+                    onClick={() => setSelectedStation('kitchen')}
+                    className="p-4 rounded-2xl border border-slate-200 dark:border-slate-900 hover:border-amber-500 text-left transition-all cursor-pointer bg-slate-50 dark:bg-black/20 group hover:shadow-md"
+                  >
+                    <div className="p-2 w-8 h-8 rounded-lg bg-red-500/10 text-red-600 dark:text-red-400 mb-3 group-hover:scale-105 transition-transform">
+                      <CookingPot className="w-4 h-4" />
+                    </div>
+                    <p className="text-xs font-bold text-slate-800 dark:text-slate-100">Kitchen KDS</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5 font-mono">Chef Dashboard</p>
+                  </button>
+
+                  <button
+                    onClick={() => setSelectedStation('waiter')}
+                    className="p-4 rounded-2xl border border-slate-200 dark:border-slate-900 hover:border-amber-500 text-left transition-all cursor-pointer bg-slate-50 dark:bg-black/20 group hover:shadow-md"
+                  >
+                    <div className="p-2 w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mb-3 group-hover:scale-105 transition-transform">
+                      <Smartphone className="w-4 h-4" />
+                    </div>
+                    <p className="text-xs font-bold text-slate-800 dark:text-slate-100">Waiter Dispatch</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5 font-mono">Courier Mobile</p>
+                  </button>
+
+                  <button
+                    onClick={() => setSelectedStation('supervisor')}
+                    className="p-4 rounded-2xl border border-slate-200 dark:border-slate-900 hover:border-amber-500 text-left transition-all cursor-pointer bg-slate-50 dark:bg-black/20 group hover:shadow-md"
+                  >
+                    <div className="p-2 w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 mb-3 group-hover:scale-105 transition-transform">
+                      <Users className="w-4 h-4" />
+                    </div>
+                    <p className="text-xs font-bold text-slate-800 dark:text-slate-100">Supervisor Hub</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5 font-mono">Service Rectifier</p>
+                  </button>
+
+                  <button
+                    onClick={() => setSelectedStation('admin')}
+                    className="p-4 rounded-2xl border border-slate-200 dark:border-slate-900 hover:border-amber-500 text-left transition-all cursor-pointer bg-slate-50 dark:bg-black/20 group hover:shadow-md"
+                  >
+                    <div className="p-2 w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-650 dark:text-indigo-400 mb-3 group-hover:scale-105 transition-transform">
+                      <Settings className="w-4 h-4" />
+                    </div>
+                    <p className="text-xs font-bold text-slate-800 dark:text-slate-100">IT Admin Console</p>
+                    <p className="text-[10px] text-slate-400 mt-0.5 font-mono">Enterprise Control</p>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              // STEP 2: Dedicated login screen for the selected station! Empty fields by default!
+              <div className="bg-white dark:bg-neutral-950/80 border border-slate-200 dark:border-slate-900 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+                
+                {/* Visual Header displaying active station details */}
+                <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-900 pb-4">
+                  <div>
+                    <button 
+                      onClick={resetStaffPanel}
+                      className="text-[10px] font-mono font-bold text-amber-600 dark:text-luxury-gold hover:underline flex items-center gap-1 cursor-pointer mb-2.5"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5" /> Back to Stations
+                    </button>
+                    <h2 className="text-base font-extrabold font-display uppercase tracking-wider text-slate-800 dark:text-slate-150 leading-tight">
+                      {selectedStation.toUpperCase()} STATION LOGIN
+                    </h2>
+                    <p className="text-[10.5px] text-slate-400 mt-0.5">
+                      Please sign in with your credential tokens.
+                    </p>
+                  </div>
+
+                  <div className="p-3 bg-slate-100 dark:bg-neutral-900 border border-slate-205 dark:border-slate-900 rounded-xl text-amber-500 font-bold text-sm">
+                    {selectedStation === 'kitchen' && '👨‍🍳'}
+                    {selectedStation === 'waiter' && '🕴️'}
+                    {selectedStation === 'supervisor' && '🤵'}
+                    {selectedStation === 'admin' && '⚙️'}
+                  </div>
+                </div>
+
+                <form onSubmit={handleStaffSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-[11px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5 font-bold">
+                      Terminal User ID
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        placeholder="Enter your terminal ID"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="w-full px-4 py-3 text-sm rounded-xl border border-slate-205 dark:border-slate-900 bg-slate-50 dark:bg-black/40 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500 dark:text-white font-mono"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5 font-bold">
+                      Access Key Passcode
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="password"
+                        placeholder="Enter your access key"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-full px-4 py-3 text-sm rounded-xl border border-slate-205 dark:border-slate-900 bg-slate-50 dark:bg-black/40 focus:outline-none focus:ring-1 focus:ring-amber-500 focus:border-amber-500 dark:text-white font-mono"
+                      />
+                    </div>
+                  </div>
+
+                  {staffError && (
+                    <p className="text-xs text-rose-500 border border-rose-550/10 bg-rose-500/5 p-2 rounded-lg text-center font-medium">
+                      ⚠️ {staffError}
+                    </p>
+                  )}
+
+                  <div className="flex flex-col sm:flex-row gap-2.5 pt-2">
+                    <button
+                      type="submit"
+                      className="flex-1 py-3 px-4 bg-slate-900 dark:bg-white text-white dark:text-black hover:brightness-110 active:scale-[0.99] font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
+                    >
+                      <KeyRound className="w-4 h-4 text-amber-500" />
+                      <span>Sign In</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleForgotCredentials}
+                      className="py-3 px-4 border border-slate-205 dark:border-slate-800 hover:border-rose-500/50 hover:bg-rose-500/5 text-slate-500 hover:text-rose-500 transition-all font-bold text-xs uppercase tracking-wider rounded-xl cursor-pointer"
+                    >
+                      Forgot Credentials
+                    </button>
+                  </div>
+                </form>
+
+                {forgotAlert && (
+                  <div className="p-3 border border-red-500/25 bg-red-500/5 text-slate-500 dark:text-slate-400 text-[10.5px] font-mono leading-relaxed rounded-xl text-center">
+                    📢 {forgotAlert}
+                  </div>
+                )}
+
+                <div className="p-3.5 rounded-2xl bg-amber-500/5 border border-amber-500/10 text-[10px] font-mono leading-relaxed text-slate-500 dark:text-slate-400 text-center">
+                  💡 **Staff Test Guidance**: Type any name/passcode (minimum of 3 characters) to test. Emulating live backend APIs securely.
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
       </div>
+
+      {/* Persistent System Info Footer */}
+      <footer className="max-w-md w-full mx-auto text-center font-mono text-[9.5px] text-slate-400 pt-6">
+        🏨 Suite Services Integration Subsystem Active &bull; Multi-Role
+      </footer>
+
     </div>
   );
 }
