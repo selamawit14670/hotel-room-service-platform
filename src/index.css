@@ -1,17 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
 @import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Outfit", sans-serif;
-  --font-serif: "Cormorant Garamond", serif;
+  --font-display: "Spectral", serif;
+  --font-serif: "Spectral", serif;
   
-  --color-luxury-gold: #c5a880;
-  --color-luxury-gold-dark: #8e734c;
-  --color-navy-950: #060913;
-  --color-navy-900: #0a0f24;
-  --color-navy-800: #121b3a;
-  --color-navy-700: #1c2b54;
+  --color-luxury-gold: #C8A86B;
+  --color-luxury-gold-dark: #B38B4D;
+  
+  --color-brand-bg-light: #F7F4EE;
+  --color-brand-bg-dark: #0B1F1A;
+  --color-brand-surface-light: #FFFFFF;
+  --color-brand-surface-dark: #122B24;
+  --color-brand-text-light: #1E2A25;
+  --color-brand-text-dark: #F5F1E8;
+  --color-brand-border-light: rgba(30,42,37,0.08);
+  --color-brand-border-dark: rgba(200,168,107,0.15);
   
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
@@ -23,13 +30,13 @@ html {
 }
 
 html {
-  background-color: #f8fafc;
-  color: #0f172a;
+  background-color: #F7F4EE;
+  color: #1E2A25;
 }
 
 html.dark {
-  background-color: #030408;
-  color: #f1f5f9;
+  background-color: #0B1F1A;
+  color: #F5F1E8;
 }
 
 body {
@@ -39,25 +46,21 @@ body {
 
 /* Glassmorphism utility */
 .glass-panel {
-  background: rgba(10, 15, 30, 0.7);
+  background: rgba(18, 43, 36, 0.85);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(200, 168, 107, 0.15);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 .glass-panel-gold {
-  background: rgba(15, 12, 8, 0.7);
+  background: rgba(18, 43, 36, 0.9);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(197, 168, 128, 0.15);
+  border: 1px solid rgba(200, 168, 107, 0.2);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
 }
 
-.glow-indigo {
-  box-shadow: 0 0 50px -10px rgba(79, 70, 229, 0.25);
-}
-
 .glow-gold {
-  box-shadow: 0 0 50px -15px rgba(197, 168, 128, 0.2);
+  box-shadow: 0 0 50px -15px rgba(200, 168, 107, 0.25);
 }
 
 /* Custom interactive animation transitions */

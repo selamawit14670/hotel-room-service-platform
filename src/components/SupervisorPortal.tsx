@@ -62,24 +62,24 @@ export default function SupervisorPortal({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030408] text-slate-900 dark:text-slate-100 transition-colors duration-300 relative select-none font-sans leading-normal">
+    <div className="min-h-screen bg-brand-bg-light dark:bg-brand-bg-dark text-brand-text-light dark:text-brand-text-dark transition-colors duration-300 relative select-none font-sans leading-normal">
       
       {/* Supervisor Header */}
-      <header className="sticky top-0 z-30 bg-white dark:bg-black/90 border-b border-slate-200 dark:border-slate-900 px-6 py-4 flex items-center justify-between">
+      <header className="sticky top-0 z-30 bg-brand-surface-light/95 dark:bg-brand-surface-dark/95 border-b border-brand-border-light dark:border-brand-border-dark px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-amber-500/10 border border-amber-500/20 rounded-xl text-amber-500">
-            <ShieldAlert className="w-6 h-6" />
+          <div className="p-2.5 bg-luxury-gold/15 border border-luxury-gold/30 rounded-xl text-luxury-gold-dark dark:text-luxury-gold">
+            <ShieldAlert className="w-5.5 h-5.5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-sm font-black font-display tracking-wider uppercase text-slate-800 dark:text-white leading-none">
+              <h1 className="text-xs font-bold font-display tracking-widest text-[#1E2A25] dark:text-[#F5F1E8] uppercase leading-none">
                 SUPERVISOR OPERATIONS HUB
               </h1>
-              <span className="px-1.5 py-0.5 rounded bg-amber-500/25 text-amber-600 dark:text-[#c5a880] text-[8px] font-mono uppercase font-black">
+              <span className="px-2 py-0.5 rounded bg-luxury-gold/25 text-[#1E2A25] dark:text-luxury-gold text-[8px] font-mono uppercase font-black tracking-wide">
                 Active Duty
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 font-mono tracking-widest uppercase mt-0.5">
+            <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono tracking-widest uppercase mt-1">
               REAL-TIME SERVICE RECTIFIER
             </p>
           </div>
@@ -89,17 +89,17 @@ export default function SupervisorPortal({
           
           <button
             onClick={onToggleTheme}
-            className="p-2.5 rounded-xl bg-slate-100 dark:bg-neutral-900 hover:text-amber-500 transition-colors cursor-pointer"
+            className="p-2.5 rounded-xl bg-brand-bg-light dark:bg-brand-bg-dark hover:text-luxury-gold border border-brand-border-light dark:border-brand-border-dark transition-colors cursor-pointer text-luxury-gold-dark dark:text-luxury-gold"
             title="Toggle Light/Dark Theme"
           >
-            {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-500" />}
+            {theme === 'dark' ? <Sun className="w-4 h-4 text-luxury-gold" /> : <Moon className="w-4 h-4 text-luxury-gold-dark" />}
           </button>
 
           <button
             onClick={onLogout}
-            className="p-2.5 px-4 rounded-xl bg-slate-900 dark:bg-neutral-900 hover:bg-rose-500 hover:text-white text-slate-100 transition-all font-mono text-[10px] uppercase font-bold flex items-center gap-1.5 cursor-pointer"
+            className="p-2.5 px-4 rounded-xl bg-brand-text-light hover:bg-[#2c3d35] dark:bg-luxury-gold dark:hover:bg-luxury-gold/90 text-white dark:text-[#0B1F1A] transition-colors font-mono text-[10px] uppercase font-bold flex items-center gap-1.5 cursor-pointer"
           >
-            <LogOut className="w-4 h-4 text-rose-400" />
+            <LogOut className="w-4 h-4" />
             <span>Lock Console</span>
           </button>
 
@@ -112,37 +112,37 @@ export default function SupervisorPortal({
         {/* Statistics Cards row */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           
-          <div className="p-4 rounded-2xl bg-white dark:bg-neutral-950/80 border border-slate-200 dark:border-slate-900">
-            <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider block">Live Active Tickets</span>
+          <div className="p-4 rounded-2xl bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark shadow-sm">
+            <span className="text-[9px] font-mono text-slate-505 dark:text-slate-450 uppercase tracking-wider block font-bold">Live Active Tickets</span>
             <div className="flex justify-between items-baseline mt-1.5">
-              <h3 className="text-2xl font-black font-display text-slate-800 dark:text-white">{totalActiveCount}</h3>
-              <span className="text-[10px] text-slate-400 font-mono">active in rooms</span>
+              <h3 className="text-2xl font-bold font-display text-brand-text-light dark:text-brand-text-dark">{totalActiveCount}</h3>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono font-bold">active in rooms</span>
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white dark:bg-neutral-950/80 border border-slate-200 dark:border-slate-900">
-            <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider block">Escalation Warnings</span>
+          <div className="p-4 rounded-2xl bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark shadow-sm">
+            <span className="text-[9px] font-mono text-slate-505 dark:text-slate-450 uppercase tracking-wider block font-bold font-display">Escalation Warnings</span>
             <div className="flex justify-between items-baseline mt-1.5">
-              <h3 className={`text-2xl font-black font-display ${criticalDelayCount > 0 ? 'text-rose-500 animate-pulse' : 'text-slate-400'}`}>
+              <h3 className={`text-2xl font-bold font-display ${criticalDelayCount > 0 ? 'text-rose-500 animate-pulse' : 'text-slate-400'}`}>
                 {criticalDelayCount}
               </h3>
-              <span className="text-[10px] text-slate-400 font-mono">Older than 30m</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono font-bold">Older than 30m</span>
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white dark:bg-neutral-950/80 border border-slate-200 dark:border-slate-900">
-            <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider block">Staff In Kitchens</span>
+          <div className="p-4 rounded-2xl bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark shadow-sm">
+            <span className="text-[9px] font-mono text-slate-505 dark:text-slate-450 uppercase tracking-wider block font-bold">Staff In Kitchens</span>
             <div className="flex justify-between items-baseline mt-1.5">
-              <h3 className="text-2xl font-black font-display text-amber-500">{staff.filter(s => s.role === 'chef' && s.status === 'active').length}</h3>
-              <span className="text-[10px] text-slate-400 font-mono">chefs active</span>
+              <h3 className="text-2xl font-bold font-display text-luxury-gold-dark dark:text-luxury-gold">{staff.filter(s => s.role === 'chef' && s.status === 'active').length}</h3>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono font-bold">chefs active</span>
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white dark:bg-neutral-950/80 border border-slate-200 dark:border-slate-900">
-            <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider block">Settled Deliveries</span>
+          <div className="p-4 rounded-2xl bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark shadow-sm">
+            <span className="text-[9px] font-mono text-slate-505 dark:text-slate-450 uppercase tracking-wider block font-bold">Settled Deliveries</span>
             <div className="flex justify-between items-baseline mt-1.5">
-              <h3 className="text-2xl font-black font-display text-emerald-500">{completedToday}</h3>
-              <span className="text-[10px] text-slate-400 font-mono">completed shifts</span>
+              <h3 className="text-2xl font-bold font-display text-emerald-600 dark:text-emerald-400">{completedToday}</h3>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono font-bold">completed shifts</span>
             </div>
           </div>
 
@@ -170,12 +170,12 @@ export default function SupervisorPortal({
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="text-xs font-bold text-rose-200">
+                      <p className="text-xs font-bold text-rose-200 font-display">
                         Suite {o.roomNumber} &bull; {o.guestName}
                       </p>
-                      <p className="text-[10px] text-rose-400 mt-0.5">Order #{o.id} &bull; Culinary Status: <span className="uppercase font-bold">{o.status}</span></p>
+                      <p className="text-[10px] text-rose-400 mt-0.5 font-mono">Order #{o.id} &bull; Culinary Status: <span className="uppercase font-bold">{o.status}</span></p>
                     </div>
-                    <div className="px-2 py-0.5 rounded bg-rose-500/20 text-[10px] font-mono font-bold text-rose-500 flex items-center gap-1">
+                    <div className="px-2 py-0.5 rounded bg-rose-500/20 text-[10px] font-mono font-bold text-rose-550 flex items-center gap-1">
                       <Timer className="w-3.5 h-3.5" />
                       <span>{formatSecondsToMins(o.secondsElapsed)} elapsed</span>
                     </div>
@@ -194,23 +194,23 @@ export default function SupervisorPortal({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
           
           {/* LEFT COMMANDS ORDERS TABLE MODULE */}
-          <div className="lg:col-span-2 rounded-2xl border border-slate-200 dark:border-slate-900 bg-white dark:bg-neutral-950 shadow-sm overflow-hidden">
+          <div className="lg:col-span-2 rounded-2xl border border-brand-border-light dark:border-brand-border-dark bg-brand-surface-light dark:bg-brand-surface-dark shadow-sm overflow-hidden">
             
             {/* Nav tool section filters */}
-            <div className="p-5 border-b border-slate-100 dark:border-slate-900 space-y-4">
+            <div className="p-5 border-b border-brand-border-light dark:border-brand-border-dark space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <h3 className="font-display font-black text-sm text-slate-800 dark:text-slate-100 uppercase tracking-widest">
+                <h3 className="font-display font-medium text-sm text-brand-text-light dark:text-brand-text-dark uppercase tracking-widest">
                   📋 Live Order Operations
                 </h3>
 
-                <div className="flex items-center gap-2 border border-slate-200 dark:border-slate-900 bg-slate-50 dark:bg-black/30 px-3.5 py-1.5 rounded-xl text-xs w-full sm:max-w-xs">
+                <div className="flex items-center gap-2 border border-brand-border-light dark:border-brand-border-dark bg-brand-bg-light dark:bg-brand-bg-dark/40 px-3.5 py-1.5 rounded-xl text-xs w-full sm:max-w-xs">
                   <Search className="w-4 h-4 text-slate-400" />
                   <input
                     type="text"
                     placeholder="Search suite number or guest name..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full focus:outline-none dark:text-white"
+                    className="w-full bg-transparent focus:outline-none text-brand-text-light dark:text-brand-text-dark"
                   />
                 </div>
               </div>
@@ -229,8 +229,8 @@ export default function SupervisorPortal({
                     onClick={() => setOrderFilter(pill.key as any)}
                     className={`px-3 py-1.5 rounded-lg border font-bold cursor-pointer transition-all ${
                       orderFilter === pill.key
-                        ? 'bg-amber-500 text-white dark:text-black border-amber-500'
-                        : 'bg-slate-50 dark:bg-black/30 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-900 hover:border-slate-300'
+                        ? 'bg-brand-text-light dark:bg-luxury-gold text-white dark:text-[#0B1F1A] border-brand-border-light dark:border-brand-border-dark shadow-xs'
+                        : 'bg-brand-bg-light dark:bg-[#122B24] text-slate-500 dark:text-slate-405 border-brand-border-light dark:border-brand-border-dark hover:border-luxury-gold'
                     }`}
                   >
                     {pill.title}
@@ -243,7 +243,7 @@ export default function SupervisorPortal({
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="border-b border-slate-100 dark:border-slate-900 bg-slate-50 dark:bg-black/20 text-[9px] font-mono tracking-widest text-slate-400 uppercase select-none">
+                  <tr className="border-b border-brand-border-light dark:border-brand-border-dark bg-brand-bg-light/60 dark:bg-[#122B24]/40 text-[9px] font-mono tracking-widest text-slate-500 dark:text-slate-400 uppercase select-none font-bold">
                     <th className="p-4 pl-6">ID & Suite</th>
                     <th className="p-4">Guest Name</th>
                     <th className="p-4">Dishes Count</th>
@@ -251,10 +251,10 @@ export default function SupervisorPortal({
                     <th className="p-4">Status Pill</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 dark:divide-slate-900">
+                <tbody className="divide-y divide-brand-border-light dark:divide-brand-border-dark">
                   {filteredOrders.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="p-12 text-center text-slate-400">
+                      <td colSpan={5} className="p-12 text-center text-slate-500 dark:text-slate-400 font-sans">
                         No active matched room orders found.
                       </td>
                     </tr>
@@ -264,26 +264,26 @@ export default function SupervisorPortal({
                       return (
                         <tr 
                           key={o.id} 
-                          className={`hover:bg-slate-50/50 dark:hover:bg-white/2 transition-colors ${
+                          className={`hover:bg-[#B38B4D]/5 dark:hover:bg-[#122B24]/60 transition-colors ${
                             isDelayedCritical ? 'bg-rose-500/5 hover:bg-rose-500/10' : ''
                           }`}
                         >
                           {/* Col 1: Room id details */}
                           <td className="p-4 pl-6">
-                            <p className="font-bold text-slate-800 dark:text-slate-100">
+                            <p className="font-bold text-brand-text-light dark:text-brand-text-dark font-display">
                               Suite {o.roomNumber}
                             </p>
-                            <p className="text-[10px] text-slate-400 font-mono mt-0.5">#{o.id}</p>
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-0.5">#{o.id}</p>
                           </td>
 
                           {/* Col 2: Name */}
                           <td className="p-4">
-                            <p className="font-semibold text-slate-650 dark:text-slate-300">{o.guestName}</p>
+                            <p className="font-bold text-brand-text-light dark:text-brand-text-dark">{o.guestName}</p>
                           </td>
 
                           {/* Col 3: Items summarizing */}
                           <td className="p-4">
-                            <p className="text-slate-500 dark:text-slate-400 truncate max-w-xs">
+                            <p className="text-slate-600 dark:text-slate-300 truncate max-w-xs leading-relaxed">
                               {o.items?.map(it => `${it.quantity}x ${it.name}`).join(', ')}
                             </p>
                           </td>
@@ -293,7 +293,7 @@ export default function SupervisorPortal({
                             <span className={`font-mono font-bold text-[10px] px-2 py-0.5 rounded ${
                               isDelayedCritical 
                                 ? 'bg-rose-500/20 text-rose-500' 
-                                : 'bg-slate-100 dark:bg-black/40 text-slate-500'
+                                : 'bg-brand-bg-light dark:bg-brand-bg-dark text-slate-500 dark:text-slate-400 border border-brand-border-light dark:border-brand-border-dark'
                             }`}>
                               {formatSecondsToMins(o.secondsElapsed)}
                             </span>
@@ -302,11 +302,11 @@ export default function SupervisorPortal({
                           {/* Col 5: Status indicator pills */}
                           <td className="p-4">
                             <span className={`px-2 py-1 rounded text-[8px] font-mono uppercase font-bold tracking-wider ${
-                              o.status === 'pending' ? 'bg-blue-500/10 text-blue-500 border border-blue-500/15' :
-                              o.status === 'preparing' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/15 animate-pulse' :
-                              o.status === 'ready' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/15' :
-                              o.status === 'delivering' ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-400/15' :
-                              'bg-slate-500/10 text-slate-400 border border-slate-500/15'
+                              o.status === 'pending' ? 'bg-blue-500/10 text-blue-600 dark:text-blue-300 border border-blue-500/15' :
+                              o.status === 'preparing' ? 'bg-luxury-gold/15 text-luxury-gold-dark dark:text-luxury-gold border border-luxury-gold/15' :
+                              o.status === 'ready' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/15' :
+                              o.status === 'delivering' ? 'bg-indigo-500/10 text-indigo-500 dark:text-indigo-400 border border-indigo-400/15' :
+                              'bg-slate-500/10 text-slate-550 dark:text-slate-400 border border-slate-500/15'
                             }`}>
                               {o.status}
                             </span>
@@ -322,13 +322,13 @@ export default function SupervisorPortal({
           </div>
 
           {/* RIGHT STAFF TEAM ASSIGNMENTS & STATUS MODULE */}
-          <div className="rounded-2xl border border-slate-200 dark:border-slate-900 bg-white dark:bg-neutral-950 shadow-sm p-5 space-y-6">
+          <div className="rounded-2xl border border-brand-border-light dark:border-brand-border-dark bg-brand-surface-light dark:bg-brand-surface-dark shadow-sm p-5 space-y-6">
             
-            <div className="border-b border-slate-100 dark:border-slate-900 pb-3">
-              <h3 className="font-display font-black text-sm text-slate-800 dark:text-slate-100 uppercase tracking-widest flex items-center gap-2">
-                <Users className="w-4.5 h-4.5 text-amber-500" /> Attendants Duty
+            <div className="border-b border-brand-border-light dark:border-brand-border-dark pb-3">
+              <h3 className="font-display font-medium text-sm text-brand-text-light dark:text-brand-text-dark uppercase tracking-widest flex items-center gap-2">
+                <Users className="w-4.5 h-4.5 text-luxury-gold-dark dark:text-luxury-gold" /> Attendants Duty
               </h3>
-              <p className="text-[10px] text-slate-400 font-sans mt-0.5">
+              <p className="text-[10px] text-slate-500 dark:text-slate-400 font-sans mt-0.5 leading-relaxed">
                 Toggle availability status for culinary line operators and room waiters.
               </p>
             </div>
@@ -337,26 +337,26 @@ export default function SupervisorPortal({
               {staff.map((member) => (
                 <div 
                   key={member.id} 
-                  className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-900 bg-slate-50/50 dark:bg-black/10 hover:border-slate-300 transition-colors"
+                  className="flex items-center justify-between p-3 rounded-xl border border-brand-border-light dark:border-brand-border-dark bg-brand-bg-light/50 dark:bg-brand-bg-dark/20 hover:border-luxury-gold transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-xl p-2 rounded-lg bg-white dark:bg-neutral-900 shadow-sm">{member.avatar}</span>
-                    <div>
-                      <h4 className="font-bold text-xs text-slate-800 dark:text-slate-200 leading-tight">
+                    <span className="text-xl p-2 rounded-lg bg-brand-surface-light dark:bg-brand-surface-dark shadow-sm border border-brand-border-light dark:border-brand-border-dark">{member.avatar}</span>
+                    <div className="text-left">
+                      <h4 className="font-bold text-xs text-brand-text-light dark:text-brand-text-dark leading-tight">
                         {member.name}
                       </h4>
-                      <p className="text-[10px] uppercase font-mono mt-0.5 text-slate-500">
+                      <p className="text-[10px] uppercase font-mono mt-0.5 text-slate-505 dark:text-slate-400 font-bold">
                         {member.role === 'chef' ? '👨‍🍳 KITCHEN COOK' : member.role === 'waiter' ? '🕴️ SUITE WAITER' : '🤵 SUPERVISOR'}
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2">
                     {/* Active label status dots */}
                     <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded text-[9px] font-mono uppercase font-bold ${
                       member.status === 'active' || member.status === 'busy'
-                        ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/15'
-                        : 'bg-slate-500/10 text-slate-400 border border-slate-500/15'
+                        ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/15'
+                        : 'bg-slate-500/10 text-slate-500 dark:text-slate-400 border border-slate-505/15'
                     }`}>
                       <span className={`w-1.5 h-1.5 rounded-full ${member.status === 'active' || member.status === 'busy' ? 'bg-emerald-500' : 'bg-slate-400'}`}></span>
                       <span>{member.status === 'active' || member.status === 'busy' ? "ON DUTY" : "BREAK"}</span>
@@ -367,8 +367,8 @@ export default function SupervisorPortal({
                       onClick={() => handleToggleStaffStatus(member.id, member.status)}
                       className={`p-1.5 px-3 rounded-lg text-[9px] font-mono font-bold uppercase cursor-pointer transition-all ${
                         member.status === 'active' || member.status === 'busy'
-                          ? 'bg-slate-100 dark:bg-black/40 text-slate-400 hover:text-rose-500 hover:bg-rose-500/15'
-                          : 'bg-emerald-505 dark:bg-emerald-600 text-white hover:brightness-110'
+                          ? 'bg-brand-bg-light dark:bg-[#122B24] text-slate-505 dark:text-slate-400 hover:text-rose-500 hover:bg-rose-500/15 border border-brand-border-light dark:border-brand-border-dark'
+                          : 'bg-brand-text-light hover:bg-[#2c3d35] dark:bg-luxury-gold dark:text-[#0B1F1A] text-white hover:brightness-110'
                       }`}
                     >
                       {member.status === 'active' || member.status === 'busy' ? "Set Break" : "Set Duty"}

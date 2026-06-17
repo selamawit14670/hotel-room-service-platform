@@ -49,15 +49,15 @@ export default function DemoModal({ isOpen, onClose, selectedPlan }: DemoModalPr
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in" id="demo-modal">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in" id="demo-modal">
       <div 
-        className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-luxury-gold/20 glass-panel-gold glow-gold p-6 md:p-8 transition-luxury"
+        className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200 dark:border-luxury-gold/20 bg-white dark:bg-neutral-950 p-6 md:p-8 transition-all duration-300 shadow-2xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.6)] font-sans"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button 
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-slate-400 hover:text-luxury-gold transition-colors hover:bg-white/5 rounded-full"
+          className="absolute top-4 right-4 p-2 text-slate-400 hover:text-luxury-gold transition-colors hover:bg-slate-100 dark:hover:bg-white/5 rounded-full"
           id="close-modal-btn"
         >
           <X className="w-5 h-5" />
@@ -70,10 +70,10 @@ export default function DemoModal({ isOpen, onClose, selectedPlan }: DemoModalPr
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] uppercase tracking-widest font-mono text-luxury-gold bg-luxury-gold/10 border border-luxury-gold/20 mb-3">
                 <Landmark className="w-3.5 h-3.5" /> Private Consultation
               </span>
-              <h3 className="font-display text-2xl md:text-3xl font-bold text-slate-100 tracking-tight">
+              <h3 className="font-display text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight text-center">
                 Secure Your RoomServiceOS Demo
               </h3>
-              <p className="mt-1.5 text-slate-400 text-sm max-w-md mx-auto">
+              <p className="mt-1.5 text-slate-500 dark:text-slate-400 text-sm max-w-md mx-auto">
                 Schedule a 25-minute interactive platform demonstration modeled after your brand structure.
               </p>
             </div>
@@ -82,32 +82,32 @@ export default function DemoModal({ isOpen, onClose, selectedPlan }: DemoModalPr
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Full name */}
                 <div>
-                  <label className="block text-xs font-mono text-slate-400 mb-1">Full Name</label>
+                  <label className="block text-xs font-mono text-slate-500 dark:text-slate-400 mb-1">Full Name</label>
                   <div className="relative">
-                    <User className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+                    <User className="absolute left-3 top-2.5 h-4 w-4 text-slate-400 dark:text-slate-500" />
                     <input
                       type="text"
                       required
                       placeholder="e.g. Jean-Luc Coste"
                       value={formData.fullName}
                       onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                      className="w-full pl-10 pr-3 py-2 text-slate-200 bg-black/40 border border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors"
+                      className="w-full pl-10 pr-3 py-2 text-slate-950 dark:text-slate-100 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors"
                     />
                   </div>
                 </div>
 
                 {/* Corporate email */}
                 <div>
-                  <label className="block text-xs font-mono text-slate-400 mb-1">Corporate Email</label>
+                  <label className="block text-xs font-mono text-slate-500 dark:text-slate-400 mb-1">Corporate Email</label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-slate-400 dark:text-slate-500" />
                     <input
                       type="email"
                       required
                       placeholder="e.g. director@luxehavenhotel.com"
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
-                      className="w-full pl-10 pr-3 py-2 text-slate-200 bg-black/40 border border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors"
+                      className="w-full pl-10 pr-3 py-2 text-slate-950 dark:text-slate-100 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors"
                     />
                   </div>
                 </div>
@@ -116,29 +116,29 @@ export default function DemoModal({ isOpen, onClose, selectedPlan }: DemoModalPr
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Hotel Name */}
                 <div>
-                  <label className="block text-xs font-mono text-slate-400 mb-1">Hotel or Brand Name</label>
+                  <label className="block text-xs font-mono text-slate-500 dark:text-slate-400 mb-1">Hotel or Brand Name</label>
                   <div className="relative">
-                    <Building2 className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+                    <Building2 className="absolute left-3 top-2.5 h-4 w-4 text-slate-400 dark:text-slate-500" />
                     <input
                       type="text"
                       required
                       placeholder="e.g. Grand Chalet Courchevel"
                       value={formData.hotelName}
                       onChange={(e) => setFormData({...formData, hotelName: e.target.value})}
-                      className="w-full pl-10 pr-3 py-2 text-slate-200 bg-black/40 border border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors"
+                      className="w-full pl-10 pr-3 py-2 text-slate-950 dark:text-slate-100 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors"
                     />
                   </div>
                 </div>
 
                 {/* Hotel Size */}
                 <div>
-                  <label className="block text-xs font-mono text-slate-400 mb-1">Property Keys (Size)</label>
+                  <label className="block text-xs font-mono text-slate-500 dark:text-slate-400 mb-1">Property Keys (Size)</label>
                   <div className="relative">
-                    <Landmark className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+                    <Landmark className="absolute left-3 top-2.5 h-4 w-4 text-slate-400 dark:text-slate-500" />
                     <select
                       value={formData.hotelSize}
                       onChange={(e) => setFormData({...formData, hotelSize: e.target.value})}
-                      className="w-full pl-10 pr-3 py-2 text-slate-300 bg-neutral-900 border border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors appearance-none"
+                      className="w-full pl-10 pr-3 py-2 text-slate-800 dark:text-slate-100 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors appearance-none"
                     >
                       <option value="1-50 rooms">Boutique (1 - 50 keys)</option>
                       <option value="51-200 rooms">Premium (51 - 200 keys)</option>
@@ -151,32 +151,32 @@ export default function DemoModal({ isOpen, onClose, selectedPlan }: DemoModalPr
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Phone */}
                 <div>
-                  <label className="block text-xs font-mono text-slate-400 mb-1">Direct Contact Number</label>
+                  <label className="block text-xs font-mono text-slate-500 dark:text-slate-400 mb-1">Direct Contact Number</label>
                   <div className="relative">
-                    <Phone className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+                    <Phone className="absolute left-3 top-2.5 h-4 w-4 text-slate-400 dark:text-slate-500" />
                     <input
                       type="tel"
                       required
                       placeholder="e.g. +33 (0)4 79 01..."
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                      className="w-full pl-10 pr-3 py-2 text-slate-200 bg-black/40 border border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors"
+                      className="w-full pl-10 pr-3 py-2 text-slate-950 dark:text-slate-100 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors"
                     />
                   </div>
                 </div>
 
                 {/* Preferred Date */}
                 <div>
-                  <label className="block text-xs font-mono text-slate-400 mb-1">Preferred Consultation Date</label>
+                  <label className="block text-xs font-mono text-slate-500 dark:text-slate-400 mb-1">Preferred Consultation Date</label>
                   <div className="relative">
-                    <Calendar className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+                    <Calendar className="absolute left-3 top-2.5 h-4 w-4 text-slate-400 dark:text-slate-500" />
                     <input
                       type="date"
                       required
                       min={new Date().toISOString().split('T')[0]}
                       value={formData.preferredDate}
                       onChange={(e) => setFormData({...formData, preferredDate: e.target.value})}
-                      className="w-full pl-10 pr-4 py-2 text-slate-200 bg-black/40 border border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors"
+                      className="w-full pl-10 pr-4 py-2 text-slate-950 dark:text-slate-100 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors"
                     />
                   </div>
                 </div>
@@ -184,13 +184,13 @@ export default function DemoModal({ isOpen, onClose, selectedPlan }: DemoModalPr
 
               {/* Special Notes */}
               <div>
-                <label className="block text-xs font-mono text-slate-400 mb-1">Integration Requests / Custom Notes (Optional)</label>
+                <label className="block text-xs font-mono text-slate-500 dark:text-slate-400 mb-1">Integration Requests / Custom Notes (Optional)</label>
                 <textarea
                   rows={2}
                   placeholder="e.g. Currently running Opera PMS. Interested in QR dynamic menu setups."
                   value={formData.notes}
                   onChange={(e) => setFormData({...formData, notes: e.target.value})}
-                  className="w-full px-3 py-2 text-slate-200 bg-black/40 border border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors"
+                  className="w-full px-3 py-2 text-slate-950 dark:text-slate-100 bg-slate-50 dark:bg-neutral-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm focus:outline-none focus:border-luxury-gold transition-colors"
                 />
               </div>
 
@@ -224,47 +224,47 @@ export default function DemoModal({ isOpen, onClose, selectedPlan }: DemoModalPr
               <ShieldCheck className="w-8 h-8" />
             </div>
             
-            <h4 className="font-display text-2xl font-bold text-slate-100">
+            <h4 className="font-display text-2xl font-bold text-slate-900 dark:text-slate-100 text-center">
               Demo Slot Reserved Successfully
             </h4>
-            <p className="text-sm text-slate-400 max-w-md mx-auto mt-2">
-              Welcome, <span className="text-luxury-gold font-medium">{ticketDetails.fullName}</span>. We are holding a personalized VIP room simulation for <span className="text-slate-200 underline decoration-luxury-gold">{ticketDetails.hotelName}</span>.
+            <p className="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto mt-2">
+              Welcome, <span className="text-luxury-gold font-medium">{ticketDetails.fullName}</span>. We are holding a personalized VIP room simulation for <span className="text-slate-800 dark:text-slate-200 underline decoration-luxury-gold">{ticketDetails.hotelName}</span>.
             </p>
 
             {/* Simulated Printed Pass Ticket */}
-            <div className="my-8 max-w-sm mx-auto border border-dashed border-luxury-gold/30 bg-black/40 p-5 rounded-xl text-left font-mono relative overflow-hidden">
+            <div className="my-8 max-w-sm mx-auto border border-dashed border-luxury-gold/30 bg-slate-50 dark:bg-neutral-900/40 p-5 rounded-xl text-left font-mono relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-luxury-gold/5 blur-xl rounded-full"></div>
               
               <div className="text-[10px] text-luxury-gold uppercase tracking-widest font-bold mb-2 border-b border-luxury-gold/10 pb-2">
                 RoomServiceOS • VIP DEMO PASS
               </div>
 
-              <div className="space-y-2 text-xs text-slate-300">
+              <div className="space-y-2 text-xs text-slate-700 dark:text-slate-300">
                 <div>
-                  <span className="text-slate-500">PARTNER:</span> {ticketDetails.fullName}
+                  <span className="text-slate-400 dark:text-slate-500">PARTNER:</span> {ticketDetails.fullName}
                 </div>
                 <div>
-                  <span className="text-slate-500">ORGANIZATION:</span> {ticketDetails.hotelName} ({ticketDetails.hotelSize})
+                  <span className="text-slate-400 dark:text-slate-500">ORGANIZATION:</span> {ticketDetails.hotelName} ({ticketDetails.hotelSize})
                 </div>
                 <div>
-                  <span className="text-slate-500">PROPOSED DATE:</span> {ticketDetails.preferredDate}
+                  <span className="text-slate-400 dark:text-slate-500">PROPOSED DATE:</span> {ticketDetails.preferredDate}
                 </div>
                 <div>
-                  <span className="text-slate-500">PLATFORM SCOPE:</span> Full 5-Portal Suite Included
+                  <span className="text-slate-400 dark:text-slate-500">PLATFORM SCOPE:</span> Full 5-Portal Suite Included
                 </div>
                 <div>
-                  <span className="text-slate-500">CONFIRMATION ID:</span> RM-{(Math.random() * 100000).toFixed(0)}-OS
+                  <span className="text-slate-400 dark:text-slate-500">CONFIRMATION ID:</span> RM-{(Math.random() * 100000).toFixed(0)}-OS
                 </div>
               </div>
 
-              <div className="mt-4 border-t border-slate-800 pt-3 text-[10px] text-slate-400 text-center uppercase tracking-wider">
+              <div className="mt-4 border-t border-slate-200 dark:border-slate-800 pt-3 text-[10px] text-slate-400 text-center uppercase tracking-wider">
                 Our Corporate Office will reach out in less than 4 hours.
               </div>
             </div>
 
             <button
               onClick={onClose}
-              className="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-slate-100 font-semibold rounded-lg text-xs transition-colors cursor-pointer"
+              className="px-6 py-2 bg-slate-900 hover:bg-slate-850 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-white font-semibold rounded-lg text-xs transition-colors cursor-pointer"
               id="close-success-btn"
             >
               Continue Exploring Platform

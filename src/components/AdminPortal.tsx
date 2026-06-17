@@ -221,22 +221,22 @@ export default function AdminPortal({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030408] text-slate-900 dark:text-slate-100 transition-colors duration-300 flex flex-col lg:flex-row font-sans">
+    <div className="min-h-screen bg-brand-bg-light dark:bg-brand-bg-dark text-brand-text-light dark:text-brand-text-dark transition-colors duration-300 flex flex-col lg:flex-row font-sans">
       
       {/* LEFT SIDEBAR NAVIGATION */}
-      <aside className="w-full lg:w-64 bg-white dark:bg-black/80 border-b lg:border-b-0 lg:border-r border-slate-200 dark:border-slate-900 p-5 flex flex-col justify-between select-none shrink-0">
+      <aside className="w-full lg:w-64 bg-brand-surface-light dark:bg-brand-surface-dark border-b lg:border-b-0 lg:border-r border-brand-border-light dark:border-brand-border-dark p-5 flex flex-col justify-between select-none shrink-0">
         <div className="space-y-8">
           
           {/* Logo brand block */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-[#ffff] font-black shadow-md">
-              <span className="font-display">{settings.logo}</span>
+            <div className="w-10 h-10 rounded-xl bg-luxury-gold/20 flex items-center justify-center text-luxury-gold-dark dark:text-luxury-gold font-extrabold shadow-sm border border-luxury-gold/35">
+              <span className="font-display text-base">{settings.logo}</span>
             </div>
             <div>
-              <h1 className="text-xs font-black tracking-widest font-display text-slate-900 dark:text-slate-50 uppercase leading-none">
+              <h1 className="text-xs font-bold tracking-widest font-display text-brand-text-light dark:text-brand-text-dark uppercase leading-none">
                 {settings.name.split(' ')[0]} Admin
               </h1>
-              <span className="text-[8px] font-mono uppercase text-amber-600 dark:text-[#c5a880] mt-1 font-bold block">
+              <span className="text-[8px] font-mono uppercase text-luxury-gold-dark dark:text-luxury-gold mt-1 font-bold block leading-none">
                 Enterprise Suite
               </span>
             </div>
@@ -248,11 +248,11 @@ export default function AdminPortal({
               onClick={() => setActiveTab('dash')}
               className={`w-full text-left py-3 px-3.5 rounded-xl flex items-center gap-3 whitespace-nowrap cursor-pointer transition-all ${
                 activeTab === 'dash'
-                  ? 'bg-amber-500 text-white dark:text-black font-extrabold shadow-sm'
-                  : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                  ? 'bg-brand-text-light dark:bg-luxury-gold text-white dark:text-[#0B1F1A] font-bold shadow-xs'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-brand-text-light dark:hover:text-brand-text-white'
               }`}
             >
-              <BarChart4 className="w-4 h-4" /> <span>Dashboard</span>
+              <BarChart4 className="w-4 h-4 text-luxury-gold-dark dark:text-luxury-gold" /> <span>Dashboard</span>
             </button>
             <button
               onClick={() => setActiveTab('menu')}

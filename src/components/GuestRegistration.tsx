@@ -53,23 +53,23 @@ export default function GuestRegistration({ onRegister, theme, onToggleTheme }: 
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between py-12 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-[#030408] text-slate-900 dark:text-slate-100 transition-colors duration-300 relative select-none font-sans">
+    <div className="min-h-screen flex flex-col justify-between py-12 px-4 sm:px-6 lg:px-8 bg-brand-bg-light dark:bg-brand-bg-dark text-brand-text-light dark:text-brand-text-dark transition-colors duration-300 relative select-none font-sans">
       
       {/* Premium Blur Accents */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-amber-500/5 dark:bg-[#c5a880]/5 blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-blue-500/5 blur-3xl pointer-events-none"></div>
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-luxury-gold/5 blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-luxury-gold-dark/5 blur-3xl pointer-events-none"></div>
 
       {/* Standalone Brand Header */}
-      <header className="max-w-md w-full mx-auto flex items-center justify-between z-10 py-4 border-b border-slate-200 dark:border-slate-900 transition-colors">
+      <header className="max-w-md w-full mx-auto flex items-center justify-between z-10 py-4 border-b border-brand-border-light dark:border-brand-border-dark transition-colors">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-amber-500/10 dark:bg-[#c5a880]/10 border border-amber-500/20 dark:border-[#c5a880]/20 flex items-center justify-center">
-            <Landmark className="w-4.5 h-4.5 text-amber-600 dark:text-[#c5a880]" />
+          <div className="w-9 h-9 rounded-xl bg-luxury-gold/15 border border-luxury-gold/20 flex items-center justify-center">
+            <Landmark className="w-4.5 h-4.5 text-luxury-gold-dark dark:text-luxury-gold" />
           </div>
-          <div className="text-left">
-            <span className="font-display font-black text-sm uppercase tracking-widest text-slate-800 dark:text-slate-50 leading-none block">
+          <div className="text-left font-display">
+            <span className="font-bold text-sm uppercase tracking-widest text-[#1E2A25] dark:text-[#F5F1E8] leading-none block font-display">
               RoomServiceOS
             </span>
-            <span className="text-[8px] font-mono uppercase tracking-widest font-semibold text-amber-600 dark:text-[#c5a880]">
+            <span className="text-[8px] font-mono uppercase tracking-widest font-bold text-luxury-gold-dark dark:text-luxury-gold mt-1 block">
               Belvedere Collection
             </span>
           </div>
@@ -78,10 +78,10 @@ export default function GuestRegistration({ onRegister, theme, onToggleTheme }: 
         {onToggleTheme && (
           <button
             onClick={onToggleTheme}
-            className="p-2.5 rounded-xl bg-white dark:bg-neutral-900 hover:text-amber-500 hover:dark:bg-black/50 border border-slate-200 dark:border-slate-800 transition-all cursor-pointer flex items-center gap-2 shadow-sm text-xs font-mono font-bold"
+            className="p-2.5 rounded-xl bg-brand-surface-light dark:bg-brand-surface-dark hover:text-luxury-gold border border-brand-border-light dark:border-brand-border-dark transition-all cursor-pointer flex items-center gap-2 shadow-xs text-xs font-mono font-bold"
             title="Toggle Light/Dark Theme"
           >
-            {theme === 'dark' ? <Sun className="w-4.5 h-4.5 text-amber-400" /> : <Moon className="w-4.5 h-4.5 text-slate-500" />}
+            {theme === 'dark' ? <Sun className="w-4.5 h-4.5 text-luxury-gold" /> : <Moon className="w-4.5 h-4.5 text-luxury-gold-dark" />}
             <span className="hidden sm:inline">{theme === 'dark' ? "Light Mode" : "Dark Mode"}</span>
           </button>
         )}
@@ -92,19 +92,19 @@ export default function GuestRegistration({ onRegister, theme, onToggleTheme }: 
         
         {/* Intro Greeting */}
         <div className="text-center space-y-2">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-wider text-[#c5a880] bg-[#c5a880]/10 border border-[#c5a880]/20 font-bold">
-            <Sparkles className="w-3.5 h-3.5 animate-pulse" /> In-Room Dining & Services
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[9px] font-mono uppercase tracking-wider text-luxury-gold-dark dark:text-luxury-gold bg-luxury-gold/10 dark:bg-[#122B24] border border-[#B38B4D]/25 dark:border-[#C8A86B]/25 font-bold">
+            <Sparkles className="w-3.5 h-3.5" /> In-Room Dining & Services
           </span>
-          <h1 className="text-2xl font-black font-display tracking-tight text-slate-900 dark:text-slate-50">
+          <h1 className="text-2xl font-medium font-display tracking-tight text-[#1E2A25] dark:text-[#F5F1E8]">
             Welcome to the Belvedere Suite Portal
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            Please register your active suite reservation details below to instantly explore culinary collections and queue premium service requests directly to your room door.
+          <p className="text-xs text-slate-550 dark:text-slate-455 leading-relaxed font-sans">
+            Please register your active suite reservation details below to explore culinary collections and queue premium service requests directly to your room door.
           </p>
         </div>
 
         {/* Custom standalone Card form */}
-        <div className="bg-white dark:bg-neutral-950 rounded-3xl border border-slate-200 dark:border-slate-900 p-6 md:p-8 shadow-xl dark:shadow-[0_8px_32px_rgba(0,0,0,0.6)] space-y-6 transition-all duration-300">
+        <div className="bg-brand-surface-light dark:bg-brand-surface-dark rounded-3xl border border-brand-border-light dark:border-brand-border-dark p-6 md:p-8 shadow-xl space-y-6 transition-all duration-300">
           
           <form onSubmit={handleSubmit} className="space-y-5">
             
@@ -117,44 +117,44 @@ export default function GuestRegistration({ onRegister, theme, onToggleTheme }: 
 
             {/* Field 1: Room Number */}
             <div className="space-y-1.5">
-              <label className="text-[10px] font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400 font-extrabold flex items-center gap-1.5">
-                <DoorOpen className="w-3.5 h-3.5 text-amber-500" /> Suite / Room Number
+              <label className="text-[10px] font-mono uppercase tracking-widest text-[#B38B4D] dark:text-[#C8A86B] font-bold flex items-center gap-1.5">
+                <DoorOpen className="w-3.5 h-3.5" /> Suite / Room Number
               </label>
               <input 
                 type="text"
                 placeholder="e.g. 412 or Penthouse B"
                 value={roomNumber}
                 onChange={(e) => setRoomNumber(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-slate-250 dark:border-slate-800 bg-slate-50/50 dark:bg-black/40 text-sm focus:ring-1 focus:ring-amber-500 focus:border-amber-500 focus:outline-hidden text-slate-900 dark:text-white transition-colors"
+                className="w-full px-4 py-3 rounded-xl border border-brand-border-light dark:border-brand-border-dark bg-brand-bg-light dark:bg-[#122B24]/40 text-sm focus:ring-1 focus:ring-luxury-gold focus:border-luxury-gold focus:outline-hidden text-brand-text-light dark:text-brand-text-dark transition-colors font-sans"
               />
             </div>
 
             {/* Field 2: Guest Name */}
             <div className="space-y-1.5">
-              <label className="text-[10px] font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400 font-extrabold flex items-center gap-1.5">
-                <User className="w-3.5 h-3.5 text-amber-500" /> Guest Name (Registered)
+              <label className="text-[10px] font-mono uppercase tracking-widest text-[#B38B4D] dark:text-[#C8A86B] font-bold flex items-center gap-1.5">
+                <User className="w-3.5 h-3.5" /> Guest Name (Registered)
               </label>
               <input 
                 type="text"
                 placeholder="e.g. Lady Katherine Sterling"
                 value={guestName}
                 onChange={(e) => setGuestName(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-slate-250 dark:border-slate-800 bg-slate-50/50 dark:bg-black/40 text-sm focus:ring-1 focus:ring-amber-500 focus:border-amber-500 focus:outline-hidden text-slate-900 dark:text-white transition-colors"
+                className="w-full px-4 py-3 rounded-xl border border-brand-border-light dark:border-brand-border-dark bg-brand-bg-light dark:bg-[#122B24]/40 text-sm focus:ring-1 focus:ring-luxury-gold focus:border-luxury-gold focus:outline-hidden text-brand-text-light dark:text-brand-text-dark transition-colors font-sans"
                 autoComplete="name"
               />
             </div>
 
             {/* Field 3: Phone Number */}
             <div className="space-y-1.5">
-              <label className="text-[10px] font-mono uppercase tracking-widest text-slate-500 dark:text-slate-400 font-extrabold flex items-center gap-1.5">
-                <Smartphone className="w-3.5 h-3.5 text-amber-500" /> Contact Phone Number
+              <label className="text-[10px] font-mono uppercase tracking-widest text-[#B38B4D] dark:text-[#C8A86B] font-bold flex items-center gap-1.5">
+                <Smartphone className="w-3.5 h-3.5" /> Contact Phone Number
               </label>
               <input 
                 type="tel"
                 placeholder="e.g. +1 (555) 012-3456"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-slate-250 dark:border-slate-800 bg-slate-50/50 dark:bg-black/40 text-sm focus:ring-1 focus:ring-amber-500 focus:border-amber-500 focus:outline-hidden text-slate-900 dark:text-white transition-colors"
+                className="w-full px-4 py-3 rounded-xl border border-brand-border-light dark:border-brand-border-dark bg-brand-bg-light dark:bg-[#122B24]/40 text-sm focus:ring-1 focus:ring-luxury-gold focus:border-luxury-gold focus:outline-hidden text-brand-text-light dark:text-brand-text-dark transition-colors font-sans"
                 autoComplete="tel"
               />
             </div>
@@ -162,16 +162,16 @@ export default function GuestRegistration({ onRegister, theme, onToggleTheme }: 
             {/* Submit Reservation Action */}
             <button
               type="submit"
-              className="w-full py-3.5 px-4 rounded-xl font-bold font-sans text-xs uppercase tracking-widest text-black bg-gradient-to-r from-amber-400 via-[#c5a880] to-amber-400 hover:brightness-105 hover:shadow-lg hover:shadow-[#c5a880]/15 active:scale-[0.99] transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer mt-2"
+              className="w-full py-3.5 px-4 rounded-xl font-bold font-display text-xs uppercase tracking-widest text-white dark:text-[#0B1F1A] bg-brand-text-light hover:bg-[#2c3d35] dark:bg-luxury-gold dark:hover:bg-luxury-gold/90 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer mt-2 shadow-md"
             >
               <span>Verify & Enter Lounge Menu</span>
-              <ArrowRight className="w-4 h-4 text-black" />
+              <ArrowRight className="w-4 h-4" />
             </button>
 
           </form>
 
           {/* Privacy & Trust info */}
-          <div className="text-[10px] font-mono text-slate-400 text-center leading-relaxed border-t border-slate-100 dark:border-slate-900 pt-4 flex-wrap flex justify-center gap-x-2">
+          <div className="text-[10px] font-mono text-[#B38B4D] dark:text-[#C8A86B] text-center leading-relaxed border-t border-brand-border-light dark:border-brand-border-dark pt-4 flex-wrap flex justify-center gap-x-2 font-bold">
             <span>🛡️ Decentrally Encrypted</span>
             <span>•</span>
             <span>⚡ In-room PMS Sync</span>
@@ -182,8 +182,8 @@ export default function GuestRegistration({ onRegister, theme, onToggleTheme }: 
       </div>
 
       {/* Subtle bottom footer info */}
-      <footer className="max-w-md w-full mx-auto text-center z-10 py-1 transition-colors">
-        <p className="text-[9px] uppercase tracking-widest font-mono text-slate-500">
+      <footer className="max-w-md w-full mx-auto text-center z-10 py-1 transition-colors font-mono">
+        <p className="text-[9px] uppercase tracking-widest text-[#B38B4D] dark:text-[#C8A86B] font-bold">
           Powered by RoomServiceOS v4.2.1 • Managed Security
         </p>
       </footer>

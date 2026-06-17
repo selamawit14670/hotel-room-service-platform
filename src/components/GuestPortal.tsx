@@ -122,20 +122,20 @@ export default function GuestPortal({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030408] text-slate-900 dark:text-slate-100 transition-colors duration-300 relative font-sans leading-normal antialiased">
+    <div className="min-h-screen bg-brand-bg-light dark:bg-brand-bg-dark text-brand-text-light dark:text-brand-text-dark transition-colors duration-300 relative font-sans leading-normal antialiased">
       
       {/* Dynamic Header */}
-      <header className="sticky top-0 z-30 bg-white/90 dark:bg-black/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-900 px-4 py-3 sm:px-6 shadow-sm select-none">
+      <header className="sticky top-0 z-30 bg-brand-surface-light/90 dark:bg-brand-surface-dark/90 backdrop-blur-md border-b border-brand-border-light dark:border-brand-border-dark px-4 py-3 sm:px-6 shadow-sm select-none">
         <div className="max-w-md mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <span className="w-8 h-8 rounded-lg bg-amber-500 dark:bg-[#c5a880] text-black font-extrabold flex items-center justify-center text-sm">
+            <span className="w-8 h-8 rounded-lg bg-luxury-gold-dark dark:bg-luxury-gold text-brand-bg-light dark:text-brand-bg-dark font-display font-bold flex items-center justify-center text-base">
               R
             </span>
             <div className="text-left">
-              <h1 className="text-xs font-black tracking-widest font-display text-slate-900 dark:text-slate-50 uppercase leading-none">
+              <h1 className="text-sm font-bold tracking-widest font-display text-brand-text-light dark:text-brand-text-dark uppercase leading-none">
                 RoomServiceOS
               </h1>
-              <p className="text-[9px] uppercase font-mono tracking-widest text-amber-600 dark:text-[#c5a880] mt-0.5 font-bold">
+              <p className="text-[9px] uppercase font-mono tracking-widest text-luxury-gold-dark dark:text-luxury-gold mt-0.5 font-bold">
                 Suite {session.roomNumber || "304"} Keys
               </p>
             </div>
@@ -145,15 +145,15 @@ export default function GuestPortal({
             {/* Theme Toggle */}
             <button
               onClick={onToggleTheme}
-              className="p-2 rounded-xl bg-slate-100 dark:bg-neutral-900 hover:text-amber-500 transition-colors cursor-pointer"
+              className="p-2 rounded-xl bg-brand-bg-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark hover:text-luxury-gold transition-colors cursor-pointer"
               title="Toggle Theme"
             >
-              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-500" />}
+              {theme === 'dark' ? <Sun className="w-4 h-4 text-luxury-gold" /> : <Moon className="w-4 h-4 text-[#B38B4D]" />}
             </button>
             {/* Exit/Change Role */}
             <button
               onClick={onLogout}
-              className="p-2 rounded-xl bg-slate-100 dark:bg-neutral-900 hover:text-rose-500 transition-colors font-mono text-[10px] uppercase flex items-center gap-1 cursor-pointer"
+              className="p-2 rounded-xl bg-brand-bg-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark hover:text-rose-500 transition-colors font-mono text-[10px] uppercase flex items-center gap-1 cursor-pointer"
               title="Leave Room Channel"
             >
               <LogOut className="w-3.5 h-3.5" />
@@ -163,12 +163,12 @@ export default function GuestPortal({
       </header>
 
       {/* Guest Greeting Banner */}
-      <div className="bg-gradient-to-r from-amber-500/5 to-amber-600/5 border-b border-amber-500/10 py-3.5 px-4 select-none">
+      <div className="bg-gradient-to-r from-luxury-gold/10 via-luxury-gold/5 to-luxury-gold-dark/10 border-b border-brand-border-light dark:border-brand-border-dark py-3.5 px-4 select-none">
         <div className="max-w-md mx-auto text-center space-y-1">
-          <p className="text-[10px] uppercase font-mono tracking-widest text-[#c5a880] font-semibold">
+          <p className="text-[10px] uppercase font-mono tracking-widest text-[#B38B4D] dark:text-[#C8A86B] font-bold">
             ESTEEMED RECEPTION WELCOME
           </p>
-          <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
+          <p className="text-sm font-bold text-brand-text-light dark:text-brand-text-dark font-display">
             Welcome back, {session.guestName || "Estee Lauder"}
           </p>
           <p className="text-[10px] text-slate-500 dark:text-slate-400">
@@ -178,14 +178,14 @@ export default function GuestPortal({
       </div>
 
       {/* Core Tabs Navigator */}
-      <div className="sticky top-[57px] z-20 bg-white/95 dark:bg-black/95 border-b border-slate-200 dark:border-slate-950 py-2 shadow-xs select-none">
+      <div className="sticky top-[57px] z-20 bg-brand-surface-light/95 dark:bg-brand-surface-dark/95 border-b border-brand-border-light dark:border-brand-border-dark py-2 shadow-sm select-none">
         <div className="max-w-md mx-auto grid grid-cols-3 px-3 gap-1.5 font-mono text-[11px] font-bold">
           <button
             onClick={() => setActiveTab('menu')}
             className={`py-2 px-1.5 rounded-xl text-center cursor-pointer transition-all flex items-center justify-center gap-1.5 ${
               activeTab === 'menu'
-                ? 'bg-amber-500 text-white dark:text-black font-extrabold'
-                : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                ? 'bg-luxury-gold-dark dark:bg-luxury-gold text-white dark:text-[#0B1F1A] font-extrabold shadow-sm'
+                : 'text-slate-500 dark:text-slate-400 hover:text-brand-text-light dark:hover:text-brand-text-dark'
             }`}
           >
             <UtensilsCrossed className="w-3.5 h-3.5" /> Dining Menu
@@ -194,8 +194,8 @@ export default function GuestPortal({
             onClick={() => setActiveTab('cart')}
             className={`py-2 px-1.5 rounded-xl text-center cursor-pointer transition-all flex items-center justify-center gap-1.5 relative ${
               activeTab === 'cart'
-                ? 'bg-amber-500 text-white dark:text-black font-extrabold'
-                : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                ? 'bg-luxury-gold-dark dark:bg-luxury-gold text-white dark:text-[#0B1F1A] font-extrabold shadow-sm'
+                : 'text-slate-500 dark:text-slate-400 hover:text-brand-text-light dark:hover:text-brand-text-dark'
             }`}
           >
             <ShoppingBag className="w-3.5 h-3.5" /> Cart 
@@ -209,8 +209,8 @@ export default function GuestPortal({
             onClick={() => setActiveTab('tracking')}
             className={`py-2 px-1.5 rounded-xl text-center cursor-pointer transition-all flex items-center justify-center gap-1.5 ${
               activeTab === 'tracking'
-                ? 'bg-amber-500 text-white dark:text-black font-extrabold'
-                : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                ? 'bg-luxury-gold-dark dark:bg-luxury-gold text-white dark:text-[#0B1F1A] font-extrabold shadow-sm'
+                : 'text-slate-500 dark:text-slate-400 hover:text-brand-text-light dark:hover:text-brand-text-dark'
             }`}
           >
             <Clipboard className="w-3.5 h-3.5" /> Tracking
@@ -235,8 +235,8 @@ export default function GuestPortal({
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-4.5 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider whitespace-nowrap cursor-pointer transition-all ${
                     selectedCategory === cat
-                      ? 'bg-slate-900 dark:bg-[#c5a880] text-white dark:text-black'
-                      : 'bg-white dark:bg-neutral-900 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-900 hover:border-slate-350'
+                      ? 'bg-brand-text-light dark:bg-luxury-gold text-brand-surface-light dark:text-[#0B1F1A]'
+                      : 'bg-brand-surface-light dark:bg-brand-surface-dark text-slate-500 dark:text-slate-400 border border-brand-border-light dark:border-brand-border-dark hover:border-luxury-gold'
                   }`}
                 >
                   {cat}
@@ -247,17 +247,17 @@ export default function GuestPortal({
             {/* Menu item cards listing */}
             <div className="grid grid-cols-1 gap-5">
               {filteredNavItems.length === 0 ? (
-                <div className="text-center py-12 p-6 rounded-2xl bg-white dark:bg-neutral-950 border border-slate-200 dark:border-slate-900">
+                <div className="text-center py-12 p-6 rounded-2xl bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark">
                   <p className="text-slate-400 text-xs">This luxury category is currently resting. Check back soon.</p>
                 </div>
               ) : (
                 filteredNavItems.map((item) => (
                   <div 
                     key={item.id}
-                    className="group bg-white dark:bg-neutral-950/80 rounded-2xl border border-slate-200 dark:border-slate-900 shadow-sm overflow-hidden flex flex-col hover:border-amber-500/30 transition-all duration-200"
+                    className="group bg-brand-surface-light dark:bg-brand-surface-dark/80 rounded-2xl border border-brand-border-light dark:border-brand-border-dark shadow-sm overflow-hidden flex flex-col hover:border-luxury-gold-dark dark:hover:border-luxury-gold transition-all duration-200"
                   >
                     {/* Item visual banner */}
-                    <div className="relative h-44 w-full bg-slate-100 overflow-hidden">
+                    <div className="relative h-44 w-full bg-brand-bg-light overflow-hidden">
                       <img 
                         src={item.image} 
                         alt={item.name}
@@ -268,15 +268,15 @@ export default function GuestPortal({
                       {item.tags?.map((tag) => (
                         <span 
                           key={tag}
-                          className="absolute top-3 left-3 px-2 py-0.5 rounded text-[8px] font-mono uppercase bg-black/60 text-amber-400 border border-amber-500/20"
+                          className="absolute top-3 left-3 px-2 py-0.5 rounded text-[8px] font-mono uppercase bg-[#0B1F1A]/80 text-luxury-gold border border-luxury-gold/20"
                         >
                           ⭐ {tag}
                         </span>
                       ))}
 
                       {/* Prep timer indicator */}
-                      <span className="absolute bottom-3 right-3 px-2 py-0.5 rounded text-[8px] font-mono bg-black/70 text-slate-300 flex items-center gap-1">
-                        <Clock className="w-2.5 h-2.5 text-amber-500" /> {selectedCategory === 'Amenities' ? '10-15 min' : '15-25 min'}
+                      <span className="absolute bottom-3 right-3 px-2 py-0.5 rounded text-[8px] font-mono bg-[#0B1F1A]/85 text-slate-300 flex items-center gap-1">
+                        <Clock className="w-2.5 h-2.5 text-luxury-gold" /> {selectedCategory === 'Amenities' ? '10-15 min' : '15-25 min'}
                       </span>
                     </div>
 
@@ -284,14 +284,14 @@ export default function GuestPortal({
                     <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
                       <div className="space-y-1">
                         <div className="flex justify-between items-start gap-2">
-                          <h3 className="font-bold text-sm text-slate-800 dark:text-slate-100 font-display leading-tight">
+                          <h3 className="font-medium text-sm text-brand-text-light dark:text-brand-text-dark font-display leading-tight">
                             {item.name}
                           </h3>
-                          <span className="font-mono text-xs font-black text-amber-600 dark:text-[#c5a880]">
+                          <span className="font-mono text-xs font-bold text-luxury-gold-dark dark:text-luxury-gold">
                             {item.price === 0 ? "FREE" : `$${item.price.toFixed(2)}`}
                           </span>
                         </div>
-                        <p className="text-slate-400 dark:text-slate-400 text-[11px] leading-relaxed">
+                        <p className="text-slate-500 dark:text-slate-400 text-[11px] leading-relaxed">
                           {item.description}
                         </p>
                       </div>
@@ -299,7 +299,7 @@ export default function GuestPortal({
                       {/* Add Button */}
                       <button
                         onClick={() => addToCart(item)}
-                        className="w-full py-2 px-3 rounded-lg bg-slate-950 dark:bg-white text-white dark:text-black font-semibold text-xs transition-transform tracking-wide hover:brightness-110 active:scale-[0.98] cursor-pointer"
+                        className="w-full py-2 px-3 rounded-lg bg-brand-text-light hover:bg-[#2c3d35] dark:bg-luxury-gold text-brand-bg-light dark:text-[#0B1F1A] font-semibold text-xs transition-all tracking-wide active:scale-[0.98] cursor-pointer"
                       >
                         Add to In-Room Request
                       </button>
@@ -321,11 +321,11 @@ export default function GuestPortal({
             </h2>
 
             {cart.length === 0 ? (
-              <div className="text-center py-16 p-6 rounded-2xl bg-white dark:bg-neutral-950 border border-slate-200 dark:border-slate-950">
-                <p className="text-slate-400 text-xs">Your room service basket is currently empty.</p>
+              <div className="text-center py-16 p-6 rounded-2xl bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark shadow-sm">
+                <p className="text-slate-550 dark:text-slate-400 text-xs">Your room service basket is currently empty.</p>
                 <button
                   onClick={() => setActiveTab('menu')}
-                  className="mt-4 px-4 py-2 rounded-xl bg-amber-500 text-black text-xs font-bold cursor-pointer"
+                  className="mt-4 px-4 py-2 rounded-xl bg-luxury-gold-dark dark:bg-luxury-gold text-white dark:text-[#0B1F1A] text-xs font-bold cursor-pointer font-display transition-colors"
                 >
                   Browse Luxury Menu
                 </button>
@@ -334,36 +334,36 @@ export default function GuestPortal({
               <div className="space-y-6">
                 
                 {/* List items */}
-                <div className="divide-y divide-slate-100 dark:divide-slate-900 border-y border-slate-100 dark:border-slate-900">
+                <div className="divide-y divide-brand-border-light dark:divide-brand-border-dark border-y border-brand-border-light dark:border-brand-border-dark">
                   {cart.map((item) => (
                     <div key={item.id} className="py-4 flex justify-between items-center gap-4">
                       <div className="min-w-0">
-                        <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">{item.name}</h4>
-                        <p className="text-[10px] text-slate-400 mt-0.5">{item.category}</p>
-                        <p className="text-[10px] text-amber-600 dark:text-[#c5a880] font-mono mt-0.5">
+                        <h4 className="text-xs font-bold text-brand-text-light dark:text-brand-text-dark font-display truncate">{item.name}</h4>
+                        <p className="text-[10px] text-slate-550 dark:text-slate-450 mt-0.5">{item.category}</p>
+                        <p className="text-[10px] text-luxury-gold-dark dark:text-luxury-gold font-mono mt-0.5 font-bold">
                           ${item.price.toFixed(2)} each
                         </p>
                       </div>
 
                       <div className="flex items-center gap-3">
-                        <div className="flex items-center border border-slate-200 dark:border-slate-800 rounded-lg bg-slate-50 dark:bg-black/30">
+                        <div className="flex items-center border border-brand-border-light dark:border-brand-border-dark rounded-lg bg-brand-bg-light/60 dark:bg-black/30">
                           <button
                             onClick={() => updateCartQuantity(item.id, -1)}
-                            className="p-1 px-2.5 text-xs text-slate-500 hover:text-amber-500 transition-colors cursor-pointer"
+                            className="p-1 px-2.5 text-xs text-slate-550 dark:text-slate-400 hover:text-luxury-gold transition-colors cursor-pointer"
                           >
                             <Minus className="w-3 h-3" />
                           </button>
-                          <span className="text-xs font-mono font-bold w-6 text-center text-slate-700 dark:text-slate-350">
+                          <span className="text-xs font-mono font-bold w-6 text-center text-brand-text-light dark:text-brand-text-dark">
                             {item.quantity}
                           </span>
                           <button
                             onClick={() => updateCartQuantity(item.id, 1)}
-                            className="p-1 px-2.5 text-xs text-slate-500 hover:text-amber-500 transition-colors cursor-pointer"
+                            className="p-1 px-2.5 text-xs text-slate-550 dark:text-slate-400 hover:text-luxury-gold transition-colors cursor-pointer"
                           >
                             <Plus className="w-3 h-3" />
                           </button>
                         </div>
-                        <span className="font-mono text-xs font-bold text-slate-800 dark:text-slate-200 min-w-[50px] text-right">
+                        <span className="font-mono text-xs font-bold text-brand-text-light dark:text-brand-text-dark min-w-[50px] text-right">
                           ${(item.price * item.quantity).toFixed(2)}
                         </span>
                       </div>
@@ -372,25 +372,25 @@ export default function GuestPortal({
                 </div>
 
                 {/* Sub-total Display layout box */}
-                <div className="p-4 rounded-xl bg-slate-100 dark:bg-neutral-950 border border-slate-200/50 dark:border-slate-900 space-y-2">
-                  <div className="flex justify-between text-xs text-slate-500">
+                <div className="p-4 rounded-xl bg-brand-bg-light/80 dark:bg-[#122B24]/40 border border-brand-border-light dark:border-brand-border-dark space-y-2">
+                  <div className="flex justify-between text-xs text-slate-550 dark:text-slate-400">
                     <span>In-Room Standard Order Total</span>
                     <span className="font-mono">${cartTotal.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between text-xs text-slate-500">
+                  <div className="flex justify-between text-xs text-slate-550 dark:text-slate-400">
                     <span>Hotel Hospitality Service Fee</span>
-                    <span className="font-mono text-emerald-500">FREE COMPLIMENTARY</span>
+                    <span className="font-mono text-emerald-500 dark:text-emerald-400 font-bold uppercase text-[9px] tracking-wider">COMPLIMENTARY</span>
                   </div>
-                  <div className="border-t border-slate-200 dark:border-slate-800 pt-2 flex justify-between text-sm font-bold text-slate-850 dark:text-slate-100">
-                    <span>Est. Final Charge</span>
-                    <span className="font-mono text-amber-500">${cartTotal.toFixed(2)}</span>
+                  <div className="border-t border-brand-border-light dark:border-brand-border-dark pt-2 flex justify-between text-sm font-bold text-brand-text-light dark:text-brand-text-dark">
+                    <span className="font-display">Est. Final Charge</span>
+                    <span className="font-mono text-luxury-gold-dark dark:text-luxury-gold">${cartTotal.toFixed(2)}</span>
                   </div>
                 </div>
 
                 {/* Form checkout */}
                 <form onSubmit={handleCheckout} className="space-y-4">
                   <div>
-                    <label className="block text-[10px] font-mono text-slate-400 uppercase tracking-wide mb-1.5 font-bold">
+                    <label className="block text-[10px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wide mb-1.5 font-bold">
                       Special Culinary Requests or Dietary Restrictions
                     </label>
                     <textarea
@@ -398,12 +398,12 @@ export default function GuestPortal({
                       value={specialRequests}
                       onChange={(e) => setSpecialRequests(e.target.value)}
                       rows={3}
-                      className="w-full p-3 font-sans text-xs rounded-xl border border-slate-200 dark:border-slate-900 bg-slate-50 dark:bg-black/40 focus:outline-none focus:ring-1 focus:ring-amber-500 dark:text-white"
+                      className="w-full p-3 font-sans text-xs rounded-xl border border-brand-border-light dark:border-brand-border-dark bg-brand-surface-light dark:bg-[#122B24]/50 focus:outline-none focus:border-luxury-gold text-brand-text-light dark:text-brand-text-dark"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[10px] font-mono text-slate-400 uppercase tracking-wide mb-1.5 font-bold">
+                    <label className="block text-[10px] font-mono text-slate-500 dark:text-slate-300 uppercase tracking-wide mb-1.5 font-bold">
                       Designated Account Payment Channel Selection
                     </label>
                     <div className="grid grid-cols-3 gap-2.5">
@@ -414,8 +414,8 @@ export default function GuestPortal({
                           onClick={() => setPaymentMethod(method)}
                           className={`py-2 p-1.5 rounded-xl text-center border font-mono text-[9px] uppercase tracking-wide cursor-pointer transition-all ${
                             paymentMethod === method
-                              ? 'bg-amber-500/10 border-amber-500 text-amber-600 dark:text-[#c5a880] font-bold'
-                              : 'bg-white dark:bg-neutral-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-950'
+                              ? 'bg-luxury-gold/10 border-luxury-gold text-luxury-gold-dark dark:text-luxury-gold font-bold'
+                              : 'bg-brand-surface-light dark:bg-brand-surface-dark text-slate-500 dark:text-slate-400 border-brand-border-light dark:border-brand-border-dark'
                           }`}
                         >
                           {method}
@@ -426,7 +426,7 @@ export default function GuestPortal({
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 font-bold text-xs text-white dark:text-black uppercase tracking-wider rounded-xl shadow-lg transition-all active:scale-[0.98] cursor-pointer text-center"
+                    className="w-full py-3.5 bg-linear-to-r from-luxury-gold-dark via-luxury-gold to-luxury-gold-dark font-bold font-display text-xs text-white dark:text-[#0B1F1A] uppercase tracking-widest rounded-xl shadow-lg transition-all active:scale-[0.98] cursor-pointer text-center"
                   >
                     Confirm Room Charge & Purchase (${cartTotal.toFixed(2)})
                   </button>
@@ -441,16 +441,16 @@ export default function GuestPortal({
         {/* TAB 3: ORDER TIMELINE TRACKING */}
         {activeTab === 'tracking' && (
           <div className="space-y-6">
-            <h2 className="text-base font-bold font-display text-slate-850 dark:text-slate-100 uppercase tracking-wide">
+            <h2 className="text-base font-bold font-display text-brand-text-light dark:text-brand-text-dark uppercase tracking-wide">
               Active Suite Room Deliveries
             </h2>
 
             {!activeOrder ? (
-              <div className="text-center py-16 p-6 rounded-2xl bg-white dark:bg-neutral-950 border border-slate-200 dark:border-slate-950">
-                <p className="text-slate-400 text-xs">You have no active or historical orders during this session.</p>
+              <div className="text-center py-16 p-6 rounded-2xl bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark shadow-sm">
+                <p className="text-slate-450 dark:text-slate-400 text-xs">You have no active or historical orders during this session.</p>
                 <button
                   onClick={() => setActiveTab('menu')}
-                  className="mt-4 px-4 py-2 rounded-xl bg-amber-500 text-black text-xs font-bold cursor-pointer font-mono"
+                  className="mt-4 px-4 py-2 rounded-xl bg-luxury-gold dark:bg-luxury-gold text-[#0B1F1A] text-xs font-bold cursor-pointer font-display"
                 >
                   Order Food Now
                 </button>
@@ -459,30 +459,30 @@ export default function GuestPortal({
               <div className="space-y-6">
                 
                 {/* Active Order Outline Status details */}
-                <div className="p-5 rounded-2xl bg-white dark:bg-neutral-950 border border-slate-200 dark:border-slate-950 space-y-3 shadow-md">
-                  <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-900 pb-3">
+                <div className="p-5 rounded-2xl bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark space-y-3 shadow-md">
+                  <div className="flex justify-between items-center border-b border-brand-border-light dark:border-brand-border-dark pb-3">
                     <div>
-                      <span className="text-[9px] font-mono text-slate-400">ORDER TOKEN</span>
-                      <p className="text-xs font-mono font-bold text-slate-700 dark:text-slate-200">#{activeOrder.id}</p>
+                      <span className="text-[9px] font-mono text-slate-450 block font-bold uppercase">ORDER TOKEN</span>
+                      <p className="text-xs font-mono font-bold text-brand-text-light dark:text-brand-text-dark">#{activeOrder.id}</p>
                     </div>
-                    <span className="px-2.5 py-1 rounded bg-amber-500/10 border border-amber-500/20 text-[9px] font-mono text-amber-600 dark:text-[#c5a880] uppercase tracking-wider font-bold">
+                    <span className="px-2.5 py-1 rounded bg-luxury-gold/15 border border-luxury-gold/30 text-[9px] font-mono text-luxury-gold-dark dark:text-luxury-gold uppercase tracking-wider font-bold">
                       {getStatusStringAndDesc(activeOrder.status).title}
                     </span>
                   </div>
 
-                  <div className="text-xs text-slate-500 space-y-1 font-sans">
-                    <p className="font-bold text-slate-700 dark:text-slate-300">
+                  <div className="text-xs text-brand-text-light dark:text-brand-text-dark space-y-1 font-sans">
+                    <p className="font-bold text-brand-text-light dark:text-brand-text-dark">
                       Suite Room {activeOrder.roomNumber} - {activeOrder.guestName}
                     </p>
-                    <p className="text-[10px] text-slate-400 leading-relaxed italic border-l-2 border-amber-500/40 pl-2 mt-1">
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed italic border-l-2 border-luxury-gold pl-2 mt-1">
                       &ldquo;{activeOrder.specialRequests || "No special dietary instructions."}&rdquo;
                     </p>
                   </div>
 
                   {/* Order Items list summarized bubble */}
                   <div className="pt-2">
-                    <span className="text-[8px] font-mono text-slate-400 block uppercase mb-1 font-bold">Consumables Placed</span>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    <span className="text-[8px] font-mono text-slate-550 dark:text-slate-400 block uppercase mb-1 font-bold">Consumables Placed</span>
+                    <p className="text-[11px] text-slate-655 dark:text-slate-350">
                       {activeOrder.items?.map(it => `${it.quantity}x ${it.name}`).join(', ')}
                     </p>
                   </div>
@@ -490,22 +490,22 @@ export default function GuestPortal({
 
                 {/* Timeline Process Diagram */}
                 <div className="py-2 space-y-2">
-                  <span className="text-[10px] uppercase font-mono tracking-widest text-[#c5a880] font-bold block">
+                  <span className="text-[10px] uppercase font-mono tracking-widest text-[#B38B4D] dark:text-[#C8A86B] font-bold block">
                     SERVICE STATE OUTLINE
                   </span>
 
-                  <div className="flex flex-col space-y-5 relative pl-6 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200 dark:before:bg-slate-900">
+                  <div className="flex flex-col space-y-5 relative pl-6 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-brand-border-light dark:before:bg-brand-border-dark">
                     
                     {/* Step 1: Placed */}
                     <div className="relative">
                       <div className={`absolute -left-[22px] top-1 w-3 h-3 rounded-full border-2 ${
                         getTimelineStep(activeOrder.status) >= 1
-                          ? 'bg-emerald-500 border-white dark:border-[#030408]'
+                          ? 'bg-emerald-500 border-brand-surface-light dark:border-brand-bg-dark'
                           : 'bg-slate-300 dark:bg-slate-800 border-slate-200'
                       }`} />
                       <div className="text-left">
-                        <h4 className="text-xs font-bold text-slate-700 dark:text-slate-200">Order Placed</h4>
-                        <p className="text-[10px] text-slate-400 mt-0.5">Your kitchen request registered instantly in operational system logs.</p>
+                        <h4 className="text-xs font-bold text-brand-text-light dark:text-brand-text-dark font-display">Order Placed</h4>
+                        <p className="text-[10px] text-slate-450 dark:text-slate-400 mt-0.5">Your kitchen request registered instantly in operational system logs.</p>
                       </div>
                     </div>
 
@@ -513,12 +513,12 @@ export default function GuestPortal({
                     <div className="relative">
                       <div className={`absolute -left-[22px] top-1 w-3 h-3 rounded-full border-2 ${
                         getTimelineStep(activeOrder.status) >= 3
-                          ? 'bg-emerald-500 border-white dark:border-[#030408]'
+                          ? 'bg-emerald-500 border-brand-surface-light dark:border-brand-bg-dark'
                           : 'bg-slate-300 dark:bg-slate-800 border-slate-200'
                       }`} />
                       <div className="text-left">
-                        <h4 className="text-xs font-bold text-slate-700 dark:text-slate-200">Chef Preparing</h4>
-                        <p className="text-[10px] text-slate-400 mt-0.5">Kitchen display screens flagged preparation with digital timing sequence.</p>
+                        <h4 className="text-xs font-bold text-brand-text-light dark:text-brand-text-dark font-display">Chef Preparing</h4>
+                        <p className="text-[10px] text-slate-450 dark:text-slate-400 mt-0.5">Kitchen display screens flagged preparation with digital timing sequence.</p>
                       </div>
                     </div>
 
@@ -526,12 +526,12 @@ export default function GuestPortal({
                     <div className="relative">
                       <div className={`absolute -left-[22px] top-1 w-3 h-3 rounded-full border-2 ${
                         getTimelineStep(activeOrder.status) >= 4
-                          ? 'bg-emerald-500 border-white dark:border-[#030408]'
+                          ? 'bg-emerald-500 border-brand-surface-light dark:border-brand-bg-dark'
                           : 'bg-slate-300 dark:bg-slate-800 border-slate-200'
                       }`} />
                       <div className="text-left">
-                        <h4 className="text-xs font-bold text-slate-700 dark:text-slate-200">Ready & Polished</h4>
-                        <p className="text-[10px] text-slate-400 mt-0.5">Gourmet preparation finished. Insulated trays sealed for corridor delivery.</p>
+                        <h4 className="text-xs font-bold text-brand-text-light dark:text-brand-text-dark font-display">Ready & Polished</h4>
+                        <p className="text-[10px] text-slate-450 dark:text-slate-400 mt-0.5">Gourmet preparation finished. Insulated trays sealed for corridor delivery.</p>
                       </div>
                     </div>
 
@@ -539,12 +539,12 @@ export default function GuestPortal({
                     <div className="relative">
                       <div className={`absolute -left-[22px] top-1 w-3 h-3 rounded-full border-2 ${
                         getTimelineStep(activeOrder.status) >= 5
-                          ? 'bg-emerald-500 border-white dark:border-[#030408]'
+                          ? 'bg-emerald-500 border-brand-surface-light dark:border-brand-bg-dark'
                           : 'bg-slate-300 dark:bg-slate-800 border-slate-200'
                       }`} />
                       <div className="text-left">
-                        <h4 className="text-xs font-bold text-slate-700 dark:text-slate-200">Descending Corridor</h4>
-                        <p className="text-[10px] text-slate-400 mt-0.5">Assigned waiter is actively carrying goods to room entrance door.</p>
+                        <h4 className="text-xs font-bold text-brand-text-light dark:text-brand-text-dark font-display">Descending Corridor</h4>
+                        <p className="text-[10px] text-slate-450 dark:text-slate-400 mt-0.5">Assigned waiter is actively carrying goods to room entrance door.</p>
                       </div>
                     </div>
 
@@ -552,12 +552,12 @@ export default function GuestPortal({
                     <div className="relative">
                       <div className={`absolute -left-[22px] top-1 w-3 h-3 rounded-full border-2 ${
                         getTimelineStep(activeOrder.status) >= 6
-                          ? 'bg-emerald-500 border-white dark:border-[#030408]'
+                          ? 'bg-emerald-500 border-brand-surface-light dark:border-brand-bg-dark'
                           : 'bg-slate-300 dark:bg-slate-800 border-slate-200'
                       }`} />
                       <div className="text-left">
-                        <h4 className="text-xs font-bold text-slate-700 dark:text-slate-200">Delivered Bon Appétit</h4>
-                        <p className="text-[10px] text-slate-400 mt-0.5">Goods received elegantly. Thank you for using RoomServiceOS.</p>
+                        <h4 className="text-xs font-bold text-brand-text-light dark:text-brand-text-dark font-display">Delivered Bon Appétit</h4>
+                        <p className="text-[10px] text-slate-455 dark:text-slate-400 mt-0.5">Goods received elegantly. Thank you for using RoomServiceOS.</p>
                       </div>
                     </div>
 
@@ -565,10 +565,10 @@ export default function GuestPortal({
                 </div>
 
                 {/* Simulated live status advice notice box */}
-                <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-900 bg-white dark:bg-neutral-950/40 text-[11px] text-slate-500 font-sans leading-relaxed flex items-start gap-2.5">
-                  <Info className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                <div className="p-4 rounded-xl border border-brand-border-light dark:border-brand-border-dark bg-brand-surface-light dark:bg-brand-surface-dark/40 text-[11px] text-slate-550 dark:text-slate-450 font-sans leading-relaxed flex items-start gap-2.5 shadow-xs">
+                  <Info className="w-5 h-5 text-luxury-gold flex-shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-bold text-slate-700 dark:text-slate-200 block mb-0.5">Live Room System Advice</span>
+                    <span className="font-bold text-brand-text-light dark:text-brand-text-dark block mb-0.5 font-display">Live Room System Advice</span>
                     {getStatusStringAndDesc(activeOrder.status).desc}
                   </div>
                 </div>
@@ -578,8 +578,8 @@ export default function GuestPortal({
 
             {/* Past orders list brief tracker */}
             {guestOrders.length > 1 && (
-              <div className="pt-6 border-t border-slate-200 dark:border-slate-900 space-y-3">
-                <span className="text-[10px] uppercase font-mono tracking-widest text-[#c5a880] font-bold block">
+              <div className="pt-6 border-t border-brand-border-light dark:border-brand-border-dark space-y-3">
+                <span className="text-[10px] uppercase font-mono tracking-widest text-[#B38B4D] dark:text-[#C8A86B] font-bold block">
                   PRIOR SESSION REQUESTS
                 </span>
                 <div className="space-y-2">
@@ -589,11 +589,11 @@ export default function GuestPortal({
                       <div 
                         key={o.id}
                         onClick={() => setJustPlacedOrder(o)}
-                        className="p-3 bg-white dark:bg-neutral-950 border border-slate-200 dark:border-slate-950 rounded-xl flex justify-between items-center text-xs hover:border-amber-500/25 cursor-pointer transition-colors"
+                        className="p-3 bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark rounded-xl flex justify-between items-center text-xs hover:border-luxury-gold cursor-pointer transition-colors"
                       >
                         <div>
-                          <p className="font-bold text-slate-700 dark:text-slate-200">Order #{o.id}</p>
-                          <p className="text-[10px] text-slate-400 mt-0.5 font-mono">
+                          <p className="font-bold text-brand-text-light dark:text-brand-text-dark font-display">Order #{o.id}</p>
+                          <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 font-mono">
                             {o.items?.length} Items &bull; {o.status.toUpperCase()}
                           </p>
                         </div>
@@ -615,10 +615,10 @@ export default function GuestPortal({
          <div className="fixed bottom-6 left-0 right-0 px-4 z-40 select-none animate-bounce-slow">
            <button
              onClick={() => setActiveTab('cart')}
-             className="max-w-md mx-auto w-full bg-slate-950 dark:bg-white text-white dark:text-black py-4 px-6 rounded-2xl flex items-center justify-between shadow-2xl font-bold text-xs font-sans tracking-wide cursor-pointer"
+             className="max-w-md mx-auto w-full bg-brand-text-light hover:bg-[#2c3d35] dark:bg-luxury-gold text-brand-surface-light dark:text-[#0B1F1A] py-4 px-6 rounded-2xl flex items-center justify-between shadow-2xl font-bold text-xs font-sans tracking-wide cursor-pointer transition-all"
            >
              <span className="flex items-center gap-2">
-                <ShoppingBag className="w-4.5 h-4.5 text-amber-500 dark:text-amber-600" />
+                <ShoppingBag className="w-4.5 h-4.5 text-luxury-gold dark:text-[#0B1F1A]" />
                 <span>{cart.reduce((sum, item) => sum + item.quantity, 0)} Items Added</span>
              </span>
              <span className="flex items-center gap-1.5 font-mono">

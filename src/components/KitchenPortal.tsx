@@ -50,26 +50,26 @@ export default function KitchenPortal({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#030408] text-slate-900 dark:text-slate-100 transition-colors duration-300 relative select-none font-sans leading-normal">
+    <div className="min-h-screen bg-brand-bg-light dark:bg-brand-bg-dark text-brand-text-light dark:text-brand-text-dark transition-colors duration-300 relative select-none font-sans leading-normal">
       
       {/* KDS Header Controls */}
-      <header className="sticky top-0 z-30 bg-white/90 dark:bg-black/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-900 px-6 py-4 flex items-center justify-between">
+      <header className="sticky top-0 z-30 bg-brand-surface-light/90 dark:bg-brand-surface-dark/95 backdrop-blur-md border-b border-brand-border-light dark:border-brand-border-dark px-6 py-4 flex items-center justify-between">
         
         {/* Left Area Logo & Role label */}
         <div className="flex items-center gap-3">
-          <div className="p-2 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-500">
+          <div className="p-2 bg-luxury-gold/15 border border-luxury-gold/25 rounded-xl text-luxury-gold-dark dark:text-luxury-gold">
             <CookingPot className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-sm font-black font-display tracking-wider uppercase text-slate-800 dark:text-white leading-none">
+              <h1 className="text-sm font-bold font-display tracking-wider uppercase text-brand-text-light dark:text-brand-text-dark leading-none">
                 ROOMSERVICEOS KDS
               </h1>
-              <span className="px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-600 dark:text-rose-400 text-[8px] font-mono uppercase font-black">
+              <span className="px-1.5 py-0.5 rounded bg-luxury-gold/20 text-luxury-gold-dark dark:text-luxury-gold text-[8px] font-mono uppercase font-bold">
                 Main Kitchen Terminal
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 font-mono tracking-widest uppercase mt-0.5">
+            <p className="text-[10px] text-luxury-gold-dark dark:text-luxury-gold/80 font-mono tracking-widest uppercase mt-0.5 font-bold">
               ACTIVE HEATING SYSTEM ACTIVE
             </p>
           </div>
@@ -80,15 +80,15 @@ export default function KitchenPortal({
           
           <button
             onClick={onToggleTheme}
-            className="p-2.5 rounded-xl bg-slate-100 dark:bg-neutral-900 hover:text-amber-500 transition-colors cursor-pointer"
+            className="p-2.5 rounded-xl bg-brand-bg-light dark:bg-brand-bg-dark hover:text-luxury-gold transition-colors cursor-pointer border border-brand-border-light dark:border-brand-border-dark"
             title="Toggle Light/Dark Theme"
           >
-            {theme === 'dark' ? <Sun className="w-4 w-4 text-amber-400" /> : <Moon className="w-4 w-4 text-slate-500" />}
+            {theme === 'dark' ? <Sun className="w-4 w-4 text-luxury-gold" /> : <Moon className="w-4 w-4 text-luxury-gold-dark" />}
           </button>
 
           <button
             onClick={onLogout}
-            className="p-2.5 px-4 rounded-xl bg-slate-900 dark:bg-neutral-900 hover:bg-rose-500 hover:text-white text-slate-100 transition-all font-mono text-[10px] uppercase font-bold flex items-center gap-1.5 cursor-pointer"
+            className="p-2.5 px-4 rounded-xl bg-brand-text-light dark:bg-brand-surface-dark text-white border border-brand-border-light dark:border-brand-border-dark hover:bg-rose-950 dark:hover:bg-rose-550 transition-all font-mono text-[10px] uppercase font-bold flex items-center gap-1.5 cursor-pointer"
           >
             <LogOut className="w-4 h-4 text-rose-400" />
             <span>Lock Terminal</span>
@@ -104,37 +104,37 @@ export default function KitchenPortal({
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           
           {/* Stats 1: New orders */}
-          <div className="p-4 rounded-2xl bg-white dark:bg-neutral-950/80 border border-slate-200 dark:border-slate-900 flex justify-between items-center shadow-xs">
+          <div className="p-4 rounded-2xl bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark flex justify-between items-center shadow-xs">
             <div>
               <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold block">New Tickets</p>
-              <h3 className="text-2xl font-black font-display text-slate-800 dark:text-white mt-1">{newCount}</h3>
+              <h3 className="text-2xl font-bold font-display text-brand-text-light dark:text-brand-text-dark mt-1">{newCount}</h3>
             </div>
-            <span className="h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
+            <span className="h-2 w-2 rounded-full bg-luxury-gold animate-pulse"></span>
           </div>
 
           {/* Stats 2: Cooking */}
-          <div className="p-4 rounded-2xl bg-white dark:bg-neutral-950/80 border border-slate-200 dark:border-slate-900 flex justify-between items-center shadow-xs">
+          <div className="p-4 rounded-2xl bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark flex justify-between items-center shadow-xs">
             <div>
               <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold block">Active Preparing</p>
-              <h3 className="text-2xl font-black font-display text-amber-500 mt-1">{prepCount}</h3>
+              <h3 className="text-2xl font-bold font-display text-luxury-gold-dark dark:text-luxury-gold mt-1">{prepCount}</h3>
             </div>
-            <Flame className="w-5 h-5 text-amber-500 animate-bounce-slow" />
+            <Flame className="w-5 h-5 text-luxury-gold" />
           </div>
 
           {/* Stats 3: Ready for pickup */}
-          <div className="p-4 rounded-2xl bg-white dark:bg-neutral-950/80 border border-slate-200 dark:border-slate-900 flex justify-between items-center shadow-xs">
+          <div className="p-4 rounded-2xl bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark flex justify-between items-center shadow-xs">
             <div>
               <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold block">Pending pickup</p>
-              <h3 className="text-2xl font-black font-display text-emerald-500 mt-1">{readyCount}</h3>
+              <h3 className="text-2xl font-bold font-display text-emerald-500 mt-1">{readyCount}</h3>
             </div>
             <Check className="w-5 h-5 text-emerald-500" />
           </div>
 
           {/* Stats 4: Completed today */}
-          <div className="p-4 rounded-2xl bg-white dark:bg-neutral-950/80 border border-slate-200 dark:border-slate-900 flex justify-between items-center shadow-xs">
+          <div className="p-4 rounded-2xl bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark flex justify-between items-center shadow-xs">
             <div>
               <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold block">Completed Today</p>
-              <h3 className="text-2xl font-black font-display text-slate-500 mt-1">{completedTodayCount}</h3>
+              <h3 className="text-2xl font-bold font-display text-slate-500 mt-1">{completedTodayCount}</h3>
             </div>
             <CheckCircle2 className="w-5 h-5 text-slate-400" />
           </div>
@@ -145,16 +145,16 @@ export default function KitchenPortal({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           
           {/* Column 1: NEW ORDERS */}
-          <div className="rounded-2xl border border-slate-200 dark:border-slate-950 bg-slate-100/60 dark:bg-neutral-950/40 p-4 flex flex-col space-y-4">
-            <div className="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-slate-900/60 font-mono text-xs">
-              <span className="font-bold flex items-center gap-1.5 text-blue-600 dark:text-blue-400">
-                🔵 NEW TICKETS ({pendingOrders.length})
+          <div className="rounded-2xl border border-brand-border-light dark:border-brand-border-dark bg-brand-surface-light/30 dark:bg-[#122B24]/40 p-4 flex flex-col space-y-4">
+            <div className="flex justify-between items-center pb-2 border-b border-brand-border-light dark:border-brand-border-dark font-mono text-xs">
+              <span className="font-bold flex items-center gap-1.5 text-blue-600 dark:text-blue-300">
+                🔴 NEW TICKETS ({pendingOrders.length})
               </span>
             </div>
 
-            <div className="space-y-4 overflow-y-auto max-h-[640px] pr-1">
+            <div className="space-y-4 overflow-y-auto max-h-[640px] pr-1 font-sans">
               {pendingOrders.length === 0 ? (
-                <div className="text-center py-16 text-slate-400 text-xs font-sans">
+                <div className="text-center py-16 text-slate-500 dark:text-slate-400 text-xs font-sans">
                   No pending orders.
                 </div>
               ) : (
@@ -165,8 +165,8 @@ export default function KitchenPortal({
                       key={order.id}
                       className={`p-4 rounded-xl border transition-all duration-200 flex flex-col justify-between space-y-4 shadow-xs relative overflow-hidden group ${
                         isDelayed 
-                          ? 'bg-rose-500/10 border-rose-500 text-slate-900 dark:text-rose-100'
-                          : 'bg-white dark:bg-neutral-950 border-slate-200 dark:border-slate-900 hover:border-slate-350'
+                          ? 'bg-rose-500/10 border-rose-500 text-brand-text-light dark:text-rose-100'
+                          : 'bg-brand-surface-light dark:bg-brand-surface-dark border-brand-border-light dark:border-brand-border-dark hover:border-luxury-gold'
                       }`}
                     >
                       {/* Red Delayed Band Overlay */}
@@ -245,16 +245,16 @@ export default function KitchenPortal({
           </div>
 
           {/* Column 2: PREPARING */}
-          <div className="rounded-2xl border border-slate-200 dark:border-slate-950 bg-slate-100/60 dark:bg-neutral-950/40 p-4 flex flex-col space-y-4">
-            <div className="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-slate-900/60 font-mono text-xs">
-              <span className="font-bold flex items-center gap-1.5 text-amber-500">
+          <div className="rounded-2xl border border-brand-border-light dark:border-brand-border-dark bg-brand-surface-light/30 dark:bg-[#122B24]/40 p-4 flex flex-col space-y-4">
+            <div className="flex justify-between items-center pb-2 border-b border-brand-border-light dark:border-brand-border-dark font-mono text-xs">
+              <span className="font-bold flex items-center gap-1.5 text-luxury-gold-dark dark:text-luxury-gold">
                 🔥 PREPARING ({preparingOrders.length})
               </span>
             </div>
 
-            <div className="space-y-4 overflow-y-auto max-h-[640px] pr-1">
+            <div className="space-y-4 overflow-y-auto max-h-[640px] pr-1 font-sans">
               {preparingOrders.length === 0 ? (
-                <div className="text-center py-16 text-slate-400 text-xs font-sans">
+                <div className="text-center py-16 text-slate-500 dark:text-slate-400 text-xs font-sans">
                   No active pots heating.
                 </div>
               ) : (
@@ -265,8 +265,8 @@ export default function KitchenPortal({
                       key={order.id}
                       className={`p-4 rounded-xl border transition-all duration-200 flex flex-col justify-between space-y-4 shadow-xs relative overflow-hidden group ${
                         isDelayed 
-                          ? 'bg-rose-500/10 border-rose-500 text-slate-900 dark:text-rose-100'
-                          : 'bg-white dark:bg-neutral-950 border-slate-200 dark:border-slate-900 hover:border-slate-350'
+                          ? 'bg-rose-500/10 border-rose-500 text-brand-text-light dark:text-rose-100'
+                          : 'bg-brand-surface-light dark:bg-brand-surface-dark border-brand-border-light dark:border-brand-border-dark hover:border-luxury-gold'
                       }`}
                     >
                       {/* Red Delayed Band Overlay */}
@@ -345,16 +345,16 @@ export default function KitchenPortal({
           </div>
 
           {/* Column 3: READY */}
-          <div className="rounded-2xl border border-slate-200 dark:border-slate-950 bg-slate-100/60 dark:bg-neutral-950/40 p-4 flex flex-col space-y-4">
-            <div className="flex justify-between items-center pb-2 border-b border-slate-200 dark:border-slate-900/60 font-mono text-xs">
-              <span className="font-bold flex items-center gap-1.5 text-emerald-500">
+          <div className="rounded-2xl border border-brand-border-light dark:border-brand-border-dark bg-brand-surface-light/30 dark:bg-[#122B24]/40 p-4 flex flex-col space-y-4">
+            <div className="flex justify-between items-center pb-2 border-b border-brand-border-light dark:border-brand-border-dark font-mono text-xs">
+              <span className="font-bold flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
                 🟢 READY FOR PICKUP ({readyOrders.length})
               </span>
             </div>
 
-            <div className="space-y-4 overflow-y-auto max-h-[640px] pr-1">
+            <div className="space-y-4 overflow-y-auto max-h-[640px] pr-1 font-sans">
               {readyOrders.length === 0 ? (
-                <div className="text-center py-16 text-slate-400 text-xs font-sans">
+                <div className="text-center py-16 text-slate-500 dark:text-slate-400 text-xs font-sans">
                   No orders waiting.
                 </div>
               ) : (
@@ -365,8 +365,8 @@ export default function KitchenPortal({
                       key={order.id}
                       className={`p-4 rounded-xl border transition-all duration-200 flex flex-col justify-between space-y-4 shadow-xs relative overflow-hidden group ${
                         isDelayed 
-                          ? 'bg-rose-500/10 border-rose-500 text-slate-900 dark:text-rose-100'
-                          : 'bg-white dark:bg-neutral-950 border-slate-200 dark:border-slate-900 hover:border-slate-350'
+                          ? 'bg-rose-500/10 border-rose-500 text-brand-text-light dark:text-rose-100'
+                          : 'bg-brand-surface-light dark:bg-brand-surface-dark border-brand-border-light dark:border-brand-border-dark hover:border-luxury-gold'
                       }`}
                     >
                       {/* Red Delayed Band Overlay */}

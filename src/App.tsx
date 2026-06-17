@@ -47,16 +47,16 @@ function StaffRedirect({ target }: { target: string }) {
 
 function NotFoundPage({ theme, onNavigate }: { theme: 'light' | 'dark'; onNavigate: (to: string) => void }) {
   return (
-    <div className="min-h-screen flex items-center justify-center font-sans bg-slate-50 dark:bg-[#030408] text-slate-800 dark:text-slate-100 p-6">
-      <div className="max-w-md w-full text-center space-y-5 p-8 rounded-3xl bg-white dark:bg-neutral-950 border border-slate-200 dark:border-slate-900 shadow-xl">
-        <span className="text-4xl text-amber-500 block">🔍</span>
-        <h2 className="font-display font-black text-lg uppercase tracking-wide">404 - Station Not Found</h2>
-        <p className="text-xs text-slate-500 leading-relaxed">
+    <div className="min-h-screen flex items-center justify-center font-sans bg-brand-bg-light dark:bg-brand-bg-dark text-brand-text-light dark:text-brand-text-dark p-6 transition-colors duration-300">
+      <div className="max-w-md w-full text-center space-y-5 p-8 rounded-3xl bg-brand-surface-light dark:bg-brand-surface-dark border border-brand-border-light dark:border-brand-border-dark shadow-xl">
+        <span className="text-4xl text-luxury-gold block">🔍</span>
+        <h2 className="font-display font-medium text-lg uppercase tracking-wide">404 - Station Not Found</h2>
+        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
           The requested operational workspace station could not be resolved or found.
         </p>
         <button
           onClick={() => onNavigate('/')}
-          className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 dark:bg-[#c5a880] text-white dark:text-black font-bold text-xs rounded-xl cursor-pointer"
+          className="w-full py-2.5 bg-brand-text-light hover:bg-[#2c3d35] dark:bg-luxury-gold text-brand-bg-light dark:text-[#0B1F1A] font-bold text-xs rounded-xl cursor-pointer transition-colors"
         >
           Return to Guest Landing
         </button>
@@ -353,7 +353,7 @@ export default function App() {
   };
 
   return (
-    <div className={`transition-colors duration-300 ${theme === 'dark' ? 'dark bg-[#030408]' : 'bg-slate-50'}`}>
+    <div className={`transition-colors duration-300 min-h-screen ${theme === 'dark' ? 'dark bg-brand-bg-dark text-brand-text-dark' : 'bg-brand-bg-light text-brand-text-light'}`}>
       
       {/* -------------------- VIEWPORT MODE 1: OPERATIONAL APP VIEWPORTS -------------------- */}
       {currentPath !== '/' && (
