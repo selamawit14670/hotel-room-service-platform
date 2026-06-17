@@ -11,10 +11,10 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center pt-24 md:pt-32 pb-16 bg-black overflow-hidden" id="hero">
+    <section className="relative min-h-[90vh] flex items-center justify-center pt-24 md:pt-32 pb-16 bg-slate-50 dark:bg-black overflow-hidden transition-colors duration-300" id="hero">
       
       {/* Absolute Decorative backdrops representing luxury atmosphere */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-navy-900/60 via-black to-black pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-slate-200/30 via-slate-50 to-slate-50 dark:from-navy-900/40 dark:via-black dark:to-black pointer-events-none"></div>
       
       {/* Decorative Golden Light Ray */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[350px] bg-luxury-gold/5 blur-[120px] rounded-full pointer-events-none"></div>
@@ -30,15 +30,15 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
               <Landmark className="w-3.5 h-3.5" /> Luxury Hospitality Solutions
             </div>
 
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-slate-100 tracking-tight leading-tight">
+            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 dark:text-slate-100 tracking-tight leading-tight">
               The Complete Room Service <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-luxury-gold via-white to-slate-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-luxury-gold via-slate-600 to-slate-400 dark:via-white">
                 Operating System
               </span> <br />
               for Modern Luxury Hotels
             </h1>
 
-            <p className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+            <p className="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
               Replace rigid old phone order calls with sleek in-room QR digital menus. Streamline kitchen display preparation workflows, expedite delivery timings, and monitor property-wide service level margins in real time from one unified cloud ecosystem.
             </p>
 
@@ -85,11 +85,11 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
 
           {/* Luxury Mockup Device Columns */}
           <div className="lg:col-span-5 relative">
-            <div className="relative mx-auto max-w-[340px] md:max-w-[380px] rounded-3xl border border-slate-900 bg-neutral-950 p-4 shadow-2xl shadow-indigo-950/20 glow-gold overflow-hidden">
+            <div className="relative mx-auto max-w-[340px] md:max-w-[380px] rounded-3xl border border-slate-200 dark:border-slate-900 bg-white dark:bg-neutral-950 p-4 shadow-2xl shadow-indigo-950/5 dark:shadow-indigo-950/20 glow-gold overflow-hidden transition-colors duration-300">
               <div className="absolute top-0 right-0 w-32 h-32 bg-luxury-gold/5 blur-xl rounded-full"></div>
               
               {/* Fake Luxury Room Poster Banner */}
-              <div className="relative rounded-2xl overflow-hidden h-48 bg-slate-900 border border-slate-850">
+              <div className="relative rounded-2xl overflow-hidden h-48 bg-slate-900 border border-slate-200 dark:border-slate-850">
                 <img 
                   src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80" 
                   alt="Luxury Suite Room Dining" 
@@ -103,7 +103,7 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
                 </div>
 
                 <div className="absolute bottom-4 left-4">
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 block font-normal">Welcome to Grand Ritz Resort</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-300 block font-normal">Welcome to Grand Ritz Resort</span>
                   <h4 className="font-display text-lg font-bold text-white tracking-tight">Imperial Room Dining</h4>
                 </div>
               </div>
@@ -115,10 +115,10 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
                   { name: "Black Truffle Normandy Tagliolini", desc: "Shaved forest Périgord truffles", price: "$48.00" },
                   { name: "Crimson Smoked French Martini", desc: "Premium Woodsmoke cocktail layer", price: "$24.00" }
                 ].map((item, idx) => (
-                  <div key={idx} className="p-3 bg-[#0a0d14] hover:bg-[#101420] transition-colors rounded-xl border border-slate-900 flex justify-between items-center">
+                  <div key={idx} className="p-3 bg-slate-50 dark:bg-[#0a0d14] hover:bg-slate-100 dark:hover:bg-[#101420] transition-colors rounded-xl border border-slate-200 dark:border-slate-900 flex justify-between items-center">
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-xs font-bold text-slate-200">{item.name}</span>
+                        <span className="text-xs font-bold text-slate-800 dark:text-slate-200">{item.name}</span>
                         {item.badge && (
                           <span className="px-1 text-[8px] font-mono font-bold bg-luxury-gold/20 text-luxury-gold border border-luxury-gold/10 rounded">
                             {item.badge}
@@ -142,24 +142,24 @@ export default function HeroSection({ onOpenDemo }: HeroSectionProps) {
               </button>
             </div>
 
-            {/* Suspended Dashboard Highlights / Telemetry Ornaments */}
-            <div className="absolute -top-6 -left-6 md:-left-12 p-3 bg-black/80 backdrop-blur-md border border-slate-900 rounded-2xl shadow-xl flex items-center gap-3 animate-bounce-slow">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+             {/* Suspended Dashboard Highlights / Telemetry Ornaments */}
+            <div className="absolute -top-6 -left-6 md:-left-12 p-3 bg-white/90 dark:bg-black/80 backdrop-blur-md border border-slate-200 dark:border-slate-900 rounded-2xl shadow-xl flex items-center gap-3 animate-bounce-slow transition-colors duration-300">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-500 dark:text-emerald-400">
                 <TrendingUp className="w-5 h-5" />
               </div>
               <div>
                 <span className="text-[9px] text-slate-500 uppercase font-mono block">Dining Revenue</span>
-                <span className="text-sm font-bold text-emerald-400 font-display">+37% Avg Volume</span>
+                <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400 font-display">+37% Avg Volume</span>
               </div>
             </div>
 
-            <div className="absolute -bottom-6 -right-6 md:-right-10 p-3 bg-black/80 backdrop-blur-md border border-slate-900 rounded-2xl shadow-xl flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400">
+            <div className="absolute -bottom-6 -right-6 md:-right-10 p-3 bg-white/90 dark:bg-black/80 backdrop-blur-md border border-slate-200 dark:border-slate-900 rounded-2xl shadow-xl flex items-center gap-3 transition-colors duration-300">
+              <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center text-orange-500 dark:text-orange-400">
                 <Clock className="w-5 h-5" />
               </div>
               <div>
                 <span className="text-[9px] text-slate-500 uppercase font-mono block font-normal">Delivery Cycle</span>
-                <span className="text-sm font-bold text-orange-400 font-display">-52% Dispatch Time</span>
+                <span className="text-sm font-bold text-orange-600 dark:text-orange-400 font-display">-52% Dispatch Time</span>
               </div>
             </div>
 

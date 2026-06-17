@@ -211,16 +211,16 @@ export default function LiveInteractiveDemo() {
         )}
 
         {/* Sync Indicator bar */}
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 p-2.5 rounded-xl border border-dashed border-slate-800 bg-neutral-950/40 text-xs text-slate-400 font-mono">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 p-2.5 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-neutral-950/40 text-xs text-slate-600 dark:text-slate-400 font-mono transition-colors">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>SYSTEM AUDIT: 5 Portals Interconnected</span>
           </div>
           <div className="flex items-center gap-4">
-            <span>⏱️ Active Delay Warning Trigger: <b className="text-red-400">&gt;25 min automatic</b></span>
+            <span>⏱️ Active Delay Warning Trigger: <b className="text-red-500 dark:text-red-400">&gt;25 min automatic</b></span>
             <button 
               onClick={handleResetDemo}
-              className="px-2.5 py-1 rounded-md border border-slate-800 hover:border-luxury-gold transition-colors bg-black flex items-center gap-1.5 text-[10px] text-slate-300 cursor-pointer"
+              className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 hover:border-luxury-gold transition-colors bg-white dark:bg-black flex items-center gap-1.5 text-[10px] text-slate-700 dark:text-slate-300 cursor-pointer"
             >
               <RefreshCw className="w-3 h-3" /> Reset Simulator State
             </button>
@@ -228,7 +228,7 @@ export default function LiveInteractiveDemo() {
         </div>
 
         {/* Portal Switcher Grid Tabs */}
-        <div className="grid grid-cols-5 md:grid-cols-5 gap-1.5 md:gap-3 mb-6 p-1.5 rounded-2xl bg-neutral-950 border border-slate-900">
+        <div className="grid grid-cols-5 md:grid-cols-5 gap-1.5 md:gap-3 mb-6 p-1.5 rounded-2xl bg-slate-100 dark:bg-neutral-950 border border-slate-200 dark:border-slate-900 transition-colors">
           {[
             { id: 'guest', label: '1. Guest Room QR', icon: QrCode, desc: 'Place Order' },
             { id: 'kitchen', label: '2. Kitchen KDS', icon: ChefHat, desc: 'Prepare Food' },
@@ -244,8 +244,8 @@ export default function LiveInteractiveDemo() {
                 onClick={() => setActivePortal(portal.id as any)}
                 className={`flex flex-col items-center justify-center p-2.5 md:p-4 rounded-xl transition-all cursor-pointer relative ${
                   isActive 
-                    ? 'bg-slate-900 border border-luxury-gold/40 text-luxury-gold shadow-lg shadow-black/60' 
-                    : 'bg-transparent text-slate-400 border border-transparent hover:bg-white/5'
+                    ? 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-luxury-gold/40 text-luxury-gold shadow-lg shadow-slate-200/50 dark:shadow-black/60' 
+                    : 'bg-transparent text-slate-500 dark:text-slate-400 border border-transparent hover:bg-slate-200/50 dark:hover:bg-white/5'
                 }`}
                 id={`demo-tab-${portal.id}`}
               >
@@ -261,23 +261,23 @@ export default function LiveInteractiveDemo() {
         </div>
 
         {/* Central Dashboard Frame */}
-        <div className="rounded-3xl border border-slate-900 bg-neutral-950 overflow-hidden shadow-2xl shadow-indigo-950/10">
+        <div className="rounded-3xl border border-slate-200 dark:border-slate-900 bg-white dark:bg-neutral-950 overflow-hidden shadow-2xl shadow-indigo-950/5 dark:shadow-indigo-950/10 transition-colors">
           
           {/* Mock Browser/Device Header */}
-          <div className="px-6 py-4 bg-[#090b11] border-b border-slate-900 flex items-center justify-between">
+          <div className="px-6 py-4 bg-slate-50 dark:bg-[#090b11] border-b border-slate-200 dark:border-slate-900 flex items-center justify-between transition-colors">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-red-500/80"></span>
               <span className="w-3 h-3 rounded-full bg-amber-500/80"></span>
               <span className="w-3 h-3 rounded-full bg-emerald-500/80"></span>
-              <span className="ml-4 px-3 py-1 bg-black/50 border border-slate-800 rounded-md text-[11px] font-mono text-slate-400 flex items-center gap-1.5">
+              <span className="ml-4 px-3 py-1 bg-white dark:bg-black/50 border border-slate-200 dark:border-slate-800 rounded-md text-[11px] font-mono text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
                 {activePortal === 'guest' && <Smartphone className="w-3.5 h-3.5 text-luxury-gold" />}
-                {activePortal !== 'guest' && <Monitor className="w-3.5 h-3.5 text-cyan-400" />}
+                {activePortal !== 'guest' && <Monitor className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />}
                 https://demo.roomserviceos.com/hotel/{activePortal === 'guest' ? 'suite-412' : activePortal}
               </span>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="text-[10px] font-mono text-slate-500 uppercase tracking-widest hidden sm:inline">Active Session ID:</span>
-              <span className="px-2 py-0.5 rounded-sm bg-slate-900 border border-slate-800 text-[10px] font-mono text-luxury-gold">RSS-901</span>
+              <span className="px-2 py-0.5 rounded-sm bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[10px] font-mono text-luxury-gold">RSS-901</span>
             </div>
           </div>
 

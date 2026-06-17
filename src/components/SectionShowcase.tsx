@@ -251,14 +251,14 @@ export default function SectionShowcase({ onOpenDemo }: ShowcaseProps) {
   const activeSec = sectionsData[activeTab];
 
   return (
-    <section className="relative py-12 md:py-24 bg-neutral-950/20 border-t border-slate-950" id="showcase-features">
+    <section className="relative py-12 md:py-24 bg-white dark:bg-neutral-950/20 border-t border-slate-200 dark:border-slate-950 transition-colors duration-300" id="showcase-features">
       {/* Decorative Ornaments */}
-      <div className="absolute top-1/2 left-10 w-96 h-96 bg-indigo-950/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute top-1/2 left-10 w-96 h-96 bg-indigo-950/5 dark:bg-indigo-950/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Tab Switcher */}
-        <div className="mb-12 flex flex-wrap justify-center gap-2 border-b border-slate-900 pb-4">
+        <div className="mb-12 flex flex-wrap justify-center gap-2 border-b border-slate-200 dark:border-slate-900 pb-4 transition-colors">
           {[
             { id: 'guest', label: 'Guest Experience' },
             { id: 'kitchen', label: 'Kitchen KDS' },
@@ -272,7 +272,7 @@ export default function SectionShowcase({ onOpenDemo }: ShowcaseProps) {
               className={`px-4 py-2 rounded-xl text-xs font-semibold cursor-pointer tracking-wide transition-all ${
                 activeTab === btn.id 
                   ? 'bg-luxury-gold text-black shadow-lg shadow-luxury-gold/10' 
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                  : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-white/5'
               }`}
             >
               {btn.label}
@@ -289,10 +289,10 @@ export default function SectionShowcase({ onOpenDemo }: ShowcaseProps) {
               <span className="text-xs font-mono uppercase tracking-widest text-luxury-gold block font-semibold">
                 {activeSec.badge}
               </span>
-              <h3 className="font-display text-2xl md:text-4xl font-black text-slate-100 tracking-tight leading-tight">
+              <h3 className="font-display text-2xl md:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight leading-tight">
                 {activeSec.title}
               </h3>
-              <p className="text-slate-400 text-sm md:text-base font-medium">
+              <p className="text-slate-600 dark:text-slate-400 text-sm md:text-base font-medium">
                 {activeSec.subtitle}
               </p>
             </div>
@@ -309,7 +309,7 @@ export default function SectionShowcase({ onOpenDemo }: ShowcaseProps) {
                     ✓
                   </div>
                   <div>
-                    <h5 className="text-xs font-bold text-slate-200">{feat.label}</h5>
+                    <h5 className="text-xs font-bold text-slate-850 dark:text-slate-200">{feat.label}</h5>
                     <p className="text-[10px] text-slate-500">{feat.desc}</p>
                   </div>
                 </div>
@@ -317,7 +317,7 @@ export default function SectionShowcase({ onOpenDemo }: ShowcaseProps) {
             </div>
 
             {/* Benefits Banner */}
-            <div className="p-4 rounded-xl bg-[#080a13] border border-slate-900 space-y-1">
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#080a13] border border-slate-200 dark:border-slate-900 space-y-1 transition-colors">
               <span className="text-[10px] font-mono uppercase text-slate-500 block">SaaS Business Outcomes</span>
               <div className="flex flex-wrap gap-x-6 gap-y-1.5 pt-1">
                 {activeSec.benefits.map((ben, i) => (
@@ -347,18 +347,18 @@ export default function SectionShowcase({ onOpenDemo }: ShowcaseProps) {
             {/* Ambient luxury backdrop shadow */}
             <div className="absolute inset-0 bg-gradient-to-r from-navy-950/20 to-indigo-950/20 rounded-3xl blur-2xl pointer-events-none"></div>
 
-            <div className="w-full max-w-[400px] rounded-3xl border border-slate-900 bg-neutral-950 p-6 md:p-8 shadow-2xl relative overflow-hidden">
+            <div className="w-full max-w-[400px] rounded-3xl border border-slate-200 dark:border-slate-900 bg-white dark:bg-neutral-950 p-6 md:p-8 shadow-2xl relative overflow-hidden transition-colors duration-300">
               
               {/* Decorative gold header badge inside panel container */}
-              <div className="flex justify-between items-center mb-6 pl-1 border-b border-slate-900 pb-3">
+              <div className="flex justify-between items-center mb-6 pl-1 border-b border-slate-100 dark:border-slate-900 pb-3">
                 <span className="text-[10px] font-mono tracking-widest uppercase text-slate-500">Live Component Preview</span>
-                <span className="px-2 py-0.5 rounded-full bg-slate-900 border border-slate-800 text-[9px] font-mono text-luxury-gold font-bold">
+                <span className="px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[9px] font-mono text-luxury-gold font-bold">
                   {activeSec.mockTitle}
                 </span>
               </div>
 
               {/* Component Canvas */}
-              <div className={`p-4 rounded-2xl border border-slate-900 flex items-center justify-center min-h-[220px] ${activeSec.mockBg}`}>
+              <div className={`p-4 rounded-2xl border border-slate-250 dark:border-slate-900 flex items-center justify-center min-h-[220px] ${activeSec.mockBg}`}>
                 {activeSec.mockContent}
               </div>
 

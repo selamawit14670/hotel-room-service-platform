@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   Menu, X, Landmark, Briefcase, Mail, Phone, ExternalLink, 
   MapPin, Clock, ShieldCheck, ArrowRight, Video, Sparkles, HelpCircle, 
-  Tv, MonitorPlay, Building2, Server, ShieldAlert 
+  Tv, MonitorPlay, Building2, Server, ShieldAlert, Sun, Moon 
 } from 'lucide-react';
 
 // Shared State Layer
@@ -283,10 +283,10 @@ export default function App() {
 
       {/* -------------------- VIEWPORT MODE 2: B2B PRODUCT MARKETING LANDING PAGE -------------------- */}
       {viewMode === 'marketing' && (
-        <div className="bg-[#030408] text-slate-100 min-h-screen relative font-sans leading-normal selection:bg-luxury-gold selection:text-black antialiased">
+        <div className="bg-slate-50 dark:bg-[#030408] text-slate-900 dark:text-slate-100 min-h-screen relative font-sans leading-normal selection:bg-luxury-gold selection:text-black antialiased transition-colors duration-300">
           
           {/* Header Navigation for Pitch Site */}
-          <header className="fixed top-0 left-0 right-0 z-40 bg-black/70 backdrop-blur-md border-b border-white/5 select-none">
+          <header className="fixed top-0 left-0 right-0 z-40 bg-white/80 dark:bg-black/70 backdrop-blur-md border-b border-slate-200 dark:border-white/5 select-none transition-colors duration-300">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex justify-between items-center h-16 md:h-20">
                 
@@ -296,13 +296,13 @@ export default function App() {
                     <span className="font-display font-extrabold text-sm tracking-tight">R</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-display font-black text-sm tracking-widest text-[#f8fafc] leading-none uppercase">RoomServiceOS</span>
+                    <span className="font-display font-black text-sm tracking-widest text-slate-900 dark:text-[#f8fafc] leading-none uppercase">RoomServiceOS</span>
                     <span className="text-[8px] font-mono text-luxury-gold uppercase tracking-widest leading-none mt-1">B2B HOSPITALITY</span>
                   </div>
                 </div>
 
                 {/* Navigation links */}
-                <nav className="hidden md:flex items-center gap-8 text-xs font-mono text-slate-400">
+                <nav className="hidden md:flex items-center gap-8 text-xs font-mono text-slate-600 dark:text-slate-400">
                   <button onClick={() => scrollToSection('hero')} className="hover:text-luxury-gold transition-colors cursor-pointer">Start</button>
                   <button onClick={() => scrollToSection('problem-solutions')} className="hover:text-luxury-gold transition-colors cursor-pointer">Pain Points</button>
                   <button onClick={() => scrollToSection('interactive-platform')} className="hover:text-luxury-gold transition-colors cursor-pointer">Connected Demo</button>
@@ -313,9 +313,18 @@ export default function App() {
 
                 {/* Actions */}
                 <div className="hidden md:flex items-center gap-4">
+                  {/* Global Theme Toggle */}
+                  <button
+                    onClick={toggleTheme}
+                    className="p-2 rounded-lg bg-slate-100 dark:bg-neutral-900 hover:text-amber-500 transition-colors cursor-pointer border border-slate-200 dark:border-slate-850"
+                    title="Toggle Theme"
+                  >
+                    {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
+                  </button>
+
                   <button
                     onClick={() => setViewMode('app')}
-                    className="bg-slate-900/60 hover:bg-slate-900 border border-slate-800 hover:border-slate-700 text-[#c5a880] text-xs font-mono font-bold py-2 px-5 rounded-lg transition-colors cursor-pointer flex items-center gap-1.5"
+                    className="bg-slate-100 dark:bg-slate-900/60 hover:bg-slate-200 dark:hover:bg-slate-900 border border-slate-250 dark:border-slate-800 text-slate-850 dark:text-[#c5a880] text-xs font-mono font-bold py-2 px-5 rounded-lg transition-colors cursor-pointer flex items-center gap-1.5"
                   >
                     <Server className="w-3.5 h-3.5" /> Launch Operational App
                   </button>

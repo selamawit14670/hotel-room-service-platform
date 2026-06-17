@@ -3,7 +3,7 @@ import { TESTIMONIALS } from '../data';
 
 export default function Testimonials() {
   return (
-    <section className="relative py-12 md:py-24 bg-[#030408]" id="testimonials">
+    <section className="relative py-12 md:py-24 bg-slate-50 dark:bg-[#030408] transition-colors duration-300" id="testimonials">
       {/* Absolute Decorative backdrop */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-luxury-gold/5 rounded-full blur-[130px] pointer-events-none"></div>
 
@@ -14,10 +14,10 @@ export default function Testimonials() {
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs uppercase tracking-widest font-mono text-luxury-gold bg-luxury-gold/10 border border-luxury-gold/25 mb-3">
             <Landmark className="w-3.5 h-3.5" /> Luxury Hotel Case Studies
           </span>
-          <h2 className="font-display text-3xl md:text-5xl font-black text-slate-100 tracking-tight leading-tight">
+          <h2 className="font-display text-3xl md:text-5xl font-black text-slate-900 dark:text-slate-100 tracking-tight leading-tight">
             Loved by Elite Hoteliers <br />and Operations Directors
           </h2>
-          <p className="mt-4 text-slate-400 text-sm md:text-base">
+          <p className="mt-4 text-slate-600 dark:text-slate-400 text-sm md:text-base">
             Discover how five-star resorts and premium serviced penthouses optimize room service yields, save valuable kitchen hours, and refine their luxury guest score ratings.
           </p>
         </div>
@@ -27,7 +27,7 @@ export default function Testimonials() {
           {TESTIMONIALS.map((test) => (
             <div 
               key={test.id} 
-              className="p-6 md:p-8 rounded-3xl bg-neutral-950 border border-slate-900 flex flex-col justify-between hover:border-luxury-gold/20 transition-luxury relative group overflow-hidden"
+              className="p-6 md:p-8 rounded-3xl bg-white dark:bg-neutral-950 border border-slate-200 dark:border-slate-900 flex flex-col justify-between hover:border-luxury-gold/20 transition-luxury relative group overflow-hidden transition-colors duration-300"
               id={`testimonial-${test.id}`}
             >
               <div>
@@ -44,21 +44,21 @@ export default function Testimonials() {
                 </div>
 
                 {/* Main Quote block */}
-                <p className="text-slate-300 text-sm leading-relaxed font-serif italic font-light">
+                <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed font-serif italic font-light">
                   &ldquo;{test.quote}&rdquo;
                 </p>
               </div>
 
               {/* Author Info footer inside card */}
-              <div className="mt-8 pt-6 border-t border-slate-900 flex items-center gap-3.5">
+              <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-900 flex items-center gap-3.5">
                 <img 
                   src={test.imgUrl} 
                   alt={test.author} 
-                  className="w-11 h-11 rounded-full object-cover border border-slate-800 flex-shrink-0"
+                  className="w-11 h-11 rounded-full object-cover border border-slate-200 dark:border-slate-800 flex-shrink-0"
                   referrerPolicy="no-referrer"
                 />
                 <div className="min-w-0">
-                  <h4 className="text-xs font-bold text-slate-200 truncate">{test.author}</h4>
+                  <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">{test.author}</h4>
                   <p className="text-[10px] text-slate-500 truncate mt-0.5">{test.role}</p>
                   <p className="text-[10px] text-luxury-gold font-mono truncate mt-0.5 uppercase tracking-wide">
                     {test.hotelBrand}
@@ -71,8 +71,8 @@ export default function Testimonials() {
         </div>
 
         {/* Quick outcome metric ribbons banner */}
-        <div className="mt-16 p-4 rounded-2xl border border-slate-900 bg-neutral-950/40 text-xs text-slate-400 text-center font-mono">
-          🏆 Trusted across <span className="text-slate-200 font-bold">14,000+ premium keys worldwide</span> to serve luxury dining compliance.
+        <div className="mt-16 p-4 rounded-2xl border border-slate-200 dark:border-slate-900 bg-white/45 dark:bg-neutral-950/40 text-xs text-slate-500 dark:text-slate-400 text-center font-mono">
+          🏆 Trusted across <span className="text-slate-800 dark:text-slate-200 font-bold">14,000+ premium keys worldwide</span> to serve luxury dining compliance.
         </div>
 
       </div>
