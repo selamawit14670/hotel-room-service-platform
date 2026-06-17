@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import { Check, X, ShieldAlert, Award, Star, Landmark, HelpCircle } from 'lucide-react';
 import { PRICING_PLANS } from '../data';
 
@@ -195,7 +195,7 @@ export default function PricingSection({ onOpenDemo }: PricingProps) {
               </thead>
               <tbody className="divide-y divide-slate-850/60">
                 {comparisonMatrix.map((cat, groupIdx) => (
-                  <div key={groupIdx} className="contents">
+                  <Fragment key={groupIdx}>
                     <tr className="bg-slate-950/70 border-y border-slate-900">
                       <td colSpan={4} className="p-3 pl-6 font-mono text-[9px] uppercase tracking-widest text-slate-400 font-bold bg-[#080b12]">
                         {cat.category}
@@ -209,7 +209,7 @@ export default function PricingSection({ onOpenDemo }: PricingProps) {
                         <td className="p-4 text-indigo-300">{feat.enterprise}</td>
                       </tr>
                     ))}
-                  </div>
+                  </Fragment>
                 ))}
               </tbody>
             </table>
