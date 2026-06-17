@@ -45,6 +45,26 @@ function StaffRedirect({ target }: { target: string }) {
   );
 }
 
+function NotFoundPage({ theme, onNavigate }: { theme: 'light' | 'dark'; onNavigate: (to: string) => void }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center font-sans bg-slate-50 dark:bg-[#030408] text-slate-800 dark:text-slate-100 p-6">
+      <div className="max-w-md w-full text-center space-y-5 p-8 rounded-3xl bg-white dark:bg-neutral-950 border border-slate-200 dark:border-slate-900 shadow-xl">
+        <span className="text-4xl text-amber-500 block">🔍</span>
+        <h2 className="font-display font-black text-lg uppercase tracking-wide">404 - Station Not Found</h2>
+        <p className="text-xs text-slate-500 leading-relaxed">
+          The requested operational workspace station could not be resolved or found.
+        </p>
+        <button
+          onClick={() => onNavigate('/')}
+          className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 dark:bg-[#c5a880] text-white dark:text-black font-bold text-xs rounded-xl cursor-pointer"
+        >
+          Return to Guest Landing
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function AccessDeniedRedirect({ requiredRole, target }: { requiredRole: string; target: string }) {
   const [countdown, setCountdown] = React.useState(3);
 
@@ -173,9 +193,9 @@ export default function App() {
   const handleLoginStaffWithNotification = (role: 'kitchen' | 'waiter' | 'supervisor' | 'admin', username: string, waiterId?: string) => {
     loginStaff(role, username, waiterId);
     showSyncNotification(`Terminal Connected: ${role.toUpperCase()} Workspace Active.`);
-    if (role === 'kitchen') navigate('/staff/kitchen');
-    else if (role === 'waiter') navigate('/staff/waiter');
-    else if (role === 'supervisor') navigate('/staff/supervisor');
+    if (role === 'kitchen') navigate('/kitchen');
+    else if (role === 'waiter') navigate('/waiter');
+    else if (role === 'supervisor') navigate('/supervisor');
     else if (role === 'admin') navigate('/admin');
   };
 
@@ -221,13 +241,8 @@ export default function App() {
       }
     }
 
-    // 2. Staff Login gate
+    // 2. Staff Login gate (No automatic redirects on visiting login page)
     if (currentPath === '/staff/login') {
-      if (session.role === 'kitchen') return <StaffRedirect target="/staff/kitchen" />;
-      if (session.role === 'waiter') return <StaffRedirect target="/staff/waiter" />;
-      if (session.role === 'supervisor') return <StaffRedirect target="/staff/supervisor" />;
-      if (session.role === 'admin') return <StaffRedirect target="/admin" />;
-
       return (
         <StaffLogin
           onLoginStaff={handleLoginStaffWithNotification}
@@ -237,10 +252,8 @@ export default function App() {
       );
     }
 
-    // 3. Admin Login gate
+    // 3. Admin Login gate (No automatic redirects on visiting login page)
     if (currentPath === '/admin/login') {
-      if (session.role === 'admin') return <StaffRedirect target="/admin" />;
-
       return (
         <AdminLogin
           onLoginAdmin={(username) => handleLoginStaffWithNotification('admin', username)}
@@ -250,8 +263,19 @@ export default function App() {
       );
     }
 
-    // 4. Kitchen Portal - Protected
+    // Legacy Routing Redirect Support
     if (currentPath === '/staff/kitchen') {
+      return <StaffRedirect target="/kitchen" />;
+    }
+    if (currentPath === '/staff/waiter') {
+      return <StaffRedirect target="/waiter" />;
+    }
+    if (currentPath === '/staff/supervisor') {
+      return <StaffRedirect target="/supervisor" />;
+    }
+
+    // 4. Kitchen Portal - Protected
+    if (currentPath === '/kitchen') {
       if (session.role !== 'kitchen') {
         return <AccessDeniedRedirect requiredRole="kitchen" target="/staff/login" />;
       }
@@ -267,7 +291,7 @@ export default function App() {
     }
 
     // 5. Waiter Portal - Protected
-    if (currentPath === '/staff/waiter') {
+    if (currentPath === '/waiter') {
       if (session.role !== 'waiter') {
         return <AccessDeniedRedirect requiredRole="waiter" target="/staff/login" />;
       }
@@ -284,7 +308,7 @@ export default function App() {
     }
 
     // 6. Supervisor Portal - Protected
-    if (currentPath === '/staff/supervisor') {
+    if (currentPath === '/supervisor') {
       if (session.role !== 'supervisor') {
         return <AccessDeniedRedirect requiredRole="supervisor" target="/staff/login" />;
       }
@@ -324,8 +348,8 @@ export default function App() {
       );
     }
 
-    // 8. B2B Landing page (doesn't render any portal card)
-    return null;
+    // 8. 404 Fallback page for unknown routes
+    return <NotFoundPage theme={theme} onNavigate={navigate} />;
   };
 
   return (
