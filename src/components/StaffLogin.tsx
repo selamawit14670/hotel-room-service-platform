@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Landmark, Briefcase, KeyRound, ShieldCheck, CookingPot, Smartphone, Users, ArrowRight, Sun, Moon } from 'lucide-react';
+import { AuthService } from '../services/authService';
 
 interface StaffLoginProps {
   onLoginStaff: (role: 'kitchen' | 'waiter' | 'supervisor', username: string, waiterId?: string) => void;
@@ -14,9 +15,11 @@ export default function StaffLogin({ onLoginStaff, theme, onToggleTheme }: Staff
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
     setError('');
 
     if (station === 'none') {
@@ -44,9 +47,26 @@ export default function StaffLogin({ onLoginStaff, theme, onToggleTheme }: Staff
       return;
     }
 
-    // Set designated courier id for Marcus/Sofia if waiter
-    const waiterId = station === 'waiter' ? 'st-3' : undefined;
-    onLoginStaff(station, username.trim(), waiterId);
+    try {
+      setLoading(true);
+      const result = await AuthService.login(username.trim(), password);
+      const serverRole = result.user.role.toLowerCase();
+
+      // Check role assignment boundaries
+      if (serverRole !== station) {
+        AuthService.clearSession();
+        setError(`Access Restriction: Account assigned role (${result.user.role}) is designated for the ${result.user.role} station, not ${station.toUpperCase()}.`);
+        return;
+      }
+
+      // Set designated courier id for Marcus/Sofia if waiter
+      const waiterId = station === 'waiter' ? result.user.id : undefined;
+      onLoginStaff(station, result.user.name, waiterId);
+    } catch (err: any) {
+      setError(err.message || 'Verification on the dispatched station failed. Invalid credentials.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -191,11 +211,22 @@ export default function StaffLogin({ onLoginStaff, theme, onToggleTheme }: Staff
             </div>
 
             <button
+              id="staff-login-btn"
               type="submit"
-              className="w-full py-3.5 px-4 rounded-xl font-bold font-display text-xs uppercase tracking-widest text-white dark:text-[#0B1F1A] bg-brand-text-light hover:bg-[#2c3d35] dark:bg-luxury-gold dark:hover:bg-luxury-gold/90 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer mt-2 shadow-md"
+              disabled={loading}
+              className="w-full py-3.5 px-4 rounded-xl font-bold font-display text-xs uppercase tracking-widest text-white dark:text-[#0B1F1A] bg-brand-text-light hover:bg-[#2c3d35] dark:bg-luxury-gold dark:hover:bg-luxury-gold/90 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer mt-2 shadow-md disabled:opacity-50"
             >
-              <span>Verify Station Credentials</span>
-              <ArrowRight className="w-4 h-4" />
+              {loading ? (
+                <>
+                  <span className="w-4 h-4 rounded-full border-2 border-current border-t-transparent animate-spin"></span>
+                  <span>Verifying Terminal Keys...</span>
+                </>
+              ) : (
+                <>
+                  <span>Verify Station Credentials</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
             </button>
 
           </form>

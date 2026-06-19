@@ -7,6 +7,7 @@ import {
 
 // Shared State Layer
 import { useSharedSystem } from './lib/state';
+import { AuthService } from './services/authService';
 
 // Portals and Login
 import GuestRegistration from './components/GuestRegistration';
@@ -276,7 +277,12 @@ export default function App() {
 
     // 4. Kitchen Portal - Protected
     if (currentPath === '/kitchen') {
-      if (session.role !== 'kitchen') {
+      const isTokenValid = AuthService.isAuthenticated();
+      const decoded = AuthService.getDecodedToken();
+      if (session.role !== 'kitchen' || !isTokenValid || decoded?.role !== 'KITCHEN') {
+        if (session.role !== 'none' && session.role !== 'guest') {
+          setTimeout(() => logout(), 0);
+        }
         return <AccessDeniedRedirect requiredRole="kitchen" target="/staff/login" />;
       }
       return (
@@ -292,7 +298,12 @@ export default function App() {
 
     // 5. Waiter Portal - Protected
     if (currentPath === '/waiter') {
-      if (session.role !== 'waiter') {
+      const isTokenValid = AuthService.isAuthenticated();
+      const decoded = AuthService.getDecodedToken();
+      if (session.role !== 'waiter' || !isTokenValid || decoded?.role !== 'WAITER') {
+        if (session.role !== 'none' && session.role !== 'guest') {
+          setTimeout(() => logout(), 0);
+        }
         return <AccessDeniedRedirect requiredRole="waiter" target="/staff/login" />;
       }
       return (
@@ -309,7 +320,12 @@ export default function App() {
 
     // 6. Supervisor Portal - Protected
     if (currentPath === '/supervisor') {
-      if (session.role !== 'supervisor') {
+      const isTokenValid = AuthService.isAuthenticated();
+      const decoded = AuthService.getDecodedToken();
+      if (session.role !== 'supervisor' || !isTokenValid || decoded?.role !== 'SUPERVISOR') {
+        if (session.role !== 'none' && session.role !== 'guest') {
+          setTimeout(() => logout(), 0);
+        }
         return <AccessDeniedRedirect requiredRole="supervisor" target="/staff/login" />;
       }
       return (
@@ -327,7 +343,12 @@ export default function App() {
 
     // 7. Admin Portal - Protected
     if (currentPath === '/admin') {
-      if (session.role !== 'admin') {
+      const isTokenValid = AuthService.isAuthenticated();
+      const decoded = AuthService.getDecodedToken();
+      if (session.role !== 'admin' || !isTokenValid || decoded?.role !== 'ADMIN') {
+        if (session.role !== 'none' && session.role !== 'guest') {
+          setTimeout(() => logout(), 0);
+        }
         return <AccessDeniedRedirect requiredRole="admin" target="/admin/login" />;
       }
       return (

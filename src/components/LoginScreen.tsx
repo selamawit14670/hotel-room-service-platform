@@ -3,6 +3,7 @@ import {
   KeyRound, Landmark, Shield, HelpCircle, ArrowRight, Sparkles, Smile, 
   Moon, Sun, ChevronLeft, CookingPot, Smartphone, ShieldCheck, Users, Settings 
 } from 'lucide-react';
+import { AuthService } from '../services/authService';
 
 interface LoginScreenProps {
   onLoginGuest: (roomNumber: string, guestName: string, phoneNumber: string) => void;
@@ -27,6 +28,7 @@ export default function LoginScreen({ onLoginGuest, onLoginStaff, theme = 'dark'
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [staffError, setStaffError] = useState('');
+  const [staffLoading, setStaffLoading] = useState(false);
   
   // Custom dialog notifications
   const [forgotAlert, setForgotAlert] = useState<string | null>(null);
@@ -49,14 +51,13 @@ export default function LoginScreen({ onLoginGuest, onLoginStaff, theme = 'dark'
     onLoginGuest(roomNum.trim(), guestName.trim(), phone.trim());
   };
 
-  const handleStaffSubmit = (e: React.FormEvent) => {
+  const handleStaffSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (staffLoading) return;
     setStaffError('');
 
     if (selectedStation === 'none') return;
 
-    // Secure mock validation
-    // Requires both fields to have content of at least 3 characters
     if (!username.trim()) {
       setStaffError('Please enter your terminal ID.');
       return;
@@ -75,9 +76,24 @@ export default function LoginScreen({ onLoginGuest, onLoginStaff, theme = 'dark'
       return;
     }
 
-    // Assign specific waiter ID for testing Sofia (st-3) or Marcus (st-4) if waiter
-    const waiterId = selectedStation === 'waiter' ? 'st-3' : undefined;
-    onLoginStaff(selectedStation, username.trim(), waiterId);
+    try {
+      setStaffLoading(true);
+      const result = await AuthService.login(username.trim(), password);
+      const serverRole = result.user.role.toLowerCase() as 'kitchen' | 'waiter' | 'supervisor' | 'admin';
+
+      if (serverRole !== selectedStation) {
+        AuthService.clearSession();
+        setStaffError(`Access Restriction: Account assigned role (${result.user.role}) is designated for ${result.user.role} console, not ${selectedStation.toUpperCase()}.`);
+        return;
+      }
+
+      const waiterId = selectedStation === 'waiter' ? result.user.id : undefined;
+      onLoginStaff(selectedStation, result.user.name, waiterId);
+    } catch (err: any) {
+      setStaffError(err.message || 'Verification failed. Please check credentials.');
+    } finally {
+      setStaffLoading(false);
+    }
   };
 
   const handleForgotCredentials = () => {
@@ -379,10 +395,15 @@ export default function LoginScreen({ onLoginGuest, onLoginStaff, theme = 'dark'
                   <div className="flex flex-col sm:flex-row gap-2.5 pt-2">
                     <button
                       type="submit"
-                      className="flex-1 py-3 px-4 bg-slate-900 dark:bg-white text-white dark:text-black hover:brightness-110 active:scale-[0.99] font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
+                      disabled={staffLoading}
+                      className="flex-1 py-3 px-4 bg-slate-900 dark:bg-white text-white dark:text-black hover:brightness-110 active:scale-[0.99] font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
                     >
-                      <KeyRound className="w-4 h-4 text-amber-500" />
-                      <span>Sign In</span>
+                      {staffLoading ? (
+                        <span className="w-4 h-4 rounded-full border-2 border-current border-t-transparent animate-spin"></span>
+                      ) : (
+                        <KeyRound className="w-4 h-4 text-amber-500" />
+                      )}
+                      <span>{staffLoading ? 'Signing In...' : 'Sign In'}</span>
                     </button>
 
                     <button

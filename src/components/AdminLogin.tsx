@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Landmark, Shield, KeyRound, ArrowRight, Sun, Moon, Sparkles } from 'lucide-react';
+import { AuthService } from '../services/authService';
 
 interface AdminLoginProps {
   onLoginAdmin: (username: string) => void;
@@ -11,9 +12,11 @@ export default function AdminLogin({ onLoginAdmin, theme, onToggleTheme }: Admin
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
     setError('');
 
     if (!username.trim()) {
@@ -36,7 +39,23 @@ export default function AdminLogin({ onLoginAdmin, theme, onToggleTheme }: Admin
       return;
     }
 
-    onLoginAdmin(username.trim());
+    try {
+      setLoading(true);
+      const result = await AuthService.login(username.trim(), password);
+      const serverRole = result.user.role.toLowerCase();
+
+      if (serverRole !== 'admin') {
+        AuthService.clearSession();
+        setError(`Access Restriction: Account assigned role (${result.user.role}) does not have admin privileges.`);
+        return;
+      }
+
+      onLoginAdmin(result.user.name);
+    } catch (err: any) {
+      setError(err.message || 'Verification on the Admin Console failed. Invalid credentials.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -129,11 +148,22 @@ export default function AdminLogin({ onLoginAdmin, theme, onToggleTheme }: Admin
             </div>
 
             <button
+              id="admin-login-btn"
               type="submit"
-              className="w-full py-3.5 px-4 rounded-xl font-bold font-display text-xs uppercase tracking-widest text-white dark:text-[#0B1F1A] bg-brand-text-light hover:bg-[#2c3d35] dark:bg-luxury-gold dark:hover:bg-luxury-gold/90 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer mt-2 shadow-md"
+              disabled={loading}
+              className="w-full py-3.5 px-4 rounded-xl font-bold font-display text-xs uppercase tracking-widest text-white dark:text-[#0B1F1A] bg-brand-text-light hover:bg-[#2c3d35] dark:bg-luxury-gold dark:hover:bg-luxury-gold/90 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer mt-2 shadow-md disabled:opacity-50"
             >
-              <span>Unlock Admin Desk</span>
-              <ArrowRight className="w-4 h-4" />
+              {loading ? (
+                <>
+                  <span className="w-4 h-4 rounded-full border-2 border-current border-t-transparent animate-spin"></span>
+                  <span>Unlocking Admin Keys...</span>
+                </>
+              ) : (
+                <>
+                  <span>Unlock Admin Desk</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
             </button>
 
           </form>

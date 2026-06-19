@@ -13,9 +13,15 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       throw new AppError('Email and password must be supplied.', 400);
     }
 
-    // Retrieve staff account
-    const user = await prisma.user.findUnique({
-      where: { email },
+    // Retrieve staff account using email or name (case-insensitive)
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { email: { equals: email.trim(), mode: 'insensitive' } },
+          { name: { equals: email.trim(), mode: 'insensitive' } },
+          { email: { contains: email.trim().toLowerCase() } }
+        ]
+      }
     });
 
     if (!user) {

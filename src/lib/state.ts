@@ -487,6 +487,8 @@ export function useSharedSystem() {
     const newSession: UserSession = { role: 'none' };
     saveStateToStorage('rsos_session', newSession);
     setSession(newSession);
+    localStorage.removeItem('rsos_jwt_token');
+    localStorage.removeItem('rsos_logged_user');
     broadcastWSMessage(`🔒 Session Closed: ${oldName} disconnected from ${oldRole.toUpperCase()} terminal.`);
   };
 
